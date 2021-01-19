@@ -1,35 +1,49 @@
 const fs = require('fs');
-const { promisify } = require('util');
 const path = require('path');
-const { execSync } = require('child_process');
-
 const YAML = require('yaml');
 const axios = require('axios');
 const checker = require('license-checker');
+const chalk = require('chalk');
 const mkdirp = require('mkdirp');
+const { execSync } = require('child_process');
+const { promisify } = require('util');
+
+const { pass, fail, warn } = require('./lib/logger');
 
 const checkerInitAsync = promisify(checker.init);
 
 const main = async () => {
+  let config;
   // load orion config
-  const configData = fs.readFileSync(
-    path.resolve(__dirname, 'orion.config.yaml'),
-    { encoding: 'utf-8' }
-  );
-  const config = YAML.parse(configData);
+  try {
+    const configData = fs.readFileSync(
+      path.resolve(__dirname, '.orion.yaml'),
+      { encoding: 'utf-8' }
+    );
 
-  console.log(config);
+    config = YAML.parse(configData);
+    console.log('\n✅ Orion config loaded.\n');
+  } catch (err) {
+    console.log(chalk.red.bold(`\n🚫 Error loading config file: ${err}\n`));
+    process.exit(1);
+  }
 
   const pkg = config.modules[0];
+
+  console.log(chalk.bold(`🧪 ==== Running checks for ${chalk.cyan.bold(`${pkg.name}`)} ====\n`));
 
   // transform info to JSON
   const pkgInfo = JSON.parse(
     execSync(`npm show ${pkg.name} --json`, { encoding: 'utf-8' })
   );
 
+  const deprecationOutput = 'Checking if it\'s deprecated on NPM'.padEnd(65, ' ');
+
   // check if package is deprecated
   if (pkgInfo.deprecated === 'this version has been deprecated') {
-    console.log(`Package ${pkg.name} is deprecated!`);
+    fail(deprecationOutput);
+  } else {
+    pass(deprecationOutput);
   }
 
   const githubTarget = pkgInfo.repository.url
@@ -41,29 +55,61 @@ const main = async () => {
   );
 
   // check if package's repo is archived
+  const archiveOutput = 'Checking if github repository is archived'.padEnd(65, ' ');
+
   if (data.archived) {
-    console.log(`Package ${pkg.name} is archived!`);
+    fail(archiveOutput);
+  } else {
+    pass(archiveOutput);
   }
+
+  // check top level license
+  const licenseOutput = '\nChecking top-level license'.padEnd(66, ' ');
+
+  if (config.licenses.pass.find((name) => name === pkgInfo.license)) {
+    pass(licenseOutput);
+  } else if (config.licenses.fail.find((name) => name === pkgInfo.license) || !pkgInfo.license) {
+    fail(licenseOutput);
+  } else {
+    warn(licenseOutput);
+  }
+
+  console.log(); // empty line
 
   // creating environment folder
   await mkdirp(path.resolve(__dirname, '.orion_env'));
 
   // installing npm module
-  const npmInstallResult = execSync(
-    'npm install --no-package-lock --prefix .orion_env express',
+  const npmOutput = execSync(
+    `npm install --no-package-lock --prefix .orion_env ${pkg.name}`,
     {
       encoding: 'utf-8',
       cwd: __dirname
     }
   );
 
-  console.log(npmInstallResult);
+  console.log(chalk.magenta(npmOutput));
 
   // checking license of dependency tree
   const packageLicenses = await checkerInitAsync({ start: '.orion_env' });
-  console.log(packageLicenses);
 
-  // clean up
+  for (const [key, value] of Object.entries(packageLicenses)) {
+    // license output
+    const output = `Checking license of ${chalk.cyan(key)}`.padEnd(75, ' ');
+
+    if (config.licenses.pass.find((name) => name === value.licenses)) {
+      pass(output);
+    } else if (
+      config.licenses.fail.find((name) => name === value.licenses) ||
+      !value.licenses
+    ) {
+      fail(output);
+    } else {
+      warn(output);
+    }
+  }
+
+  // clean up node_modules
   fs.rmdirSync(path.resolve(__dirname, '.orion_env', 'node_modules'), {
     recursive: true
   });
