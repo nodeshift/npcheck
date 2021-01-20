@@ -30,14 +30,23 @@ const main = async () => {
 
   const pkg = config.modules[0];
 
-  console.log(chalk.bold(`🧪 ==== Running checks on ${chalk.cyan.bold(`${pkg.name}`)} package ====\n`));
+  console.log(
+    chalk.bold(
+      `🧪 ==== Running checks on ${chalk.cyan.bold(
+        `${pkg.name}`
+      )} package ====\n`
+    )
+  );
 
   // transform info to JSON
   const pkgInfo = JSON.parse(
     execSync(`npm show ${pkg.name} --json`, { encoding: 'utf-8' })
   );
 
-  const deprecationOutput = 'Checking if it\'s deprecated on NPM'.padEnd(65, ' ');
+  const deprecationOutput = "Checking if it's deprecated on NPM".padEnd(
+    65,
+    ' '
+  );
 
   // check if package is deprecated
   if (pkgInfo.deprecated === 'this version has been deprecated') {
@@ -55,7 +64,10 @@ const main = async () => {
   );
 
   // check if package's repo is archived
-  const archiveOutput = 'Checking if github repository is archived'.padEnd(65, ' ');
+  const archiveOutput = 'Checking if github repository is archived'.padEnd(
+    65,
+    ' '
+  );
 
   if (data.archived) {
     fail(archiveOutput);
@@ -68,7 +80,10 @@ const main = async () => {
 
   if (config.licenses.pass.find((name) => name === pkgInfo.license)) {
     pass(licenseOutput);
-  } else if (config.licenses.fail.find((name) => name === pkgInfo.license) || !pkgInfo.license) {
+  } else if (
+    config.licenses.fail.find((name) => name === pkgInfo.license) ||
+    !pkgInfo.license
+  ) {
     fail(licenseOutput);
   } else {
     warn(licenseOutput);
