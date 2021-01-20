@@ -17,12 +17,12 @@ const main = async () => {
   // load orion config
   try {
     const configData = fs.readFileSync(
-      path.resolve(__dirname, '.orion.yaml'),
+      path.resolve(__dirname, '.orion.config.yaml'),
       { encoding: 'utf-8' }
     );
 
     config = YAML.parse(configData);
-    console.log('\n✅ Orion config loaded.\n');
+    console.log('\n🖖 Orion config loaded.\n');
   } catch (err) {
     console.log(chalk.red.bold(`\n🚫 Error loading config file: ${err}\n`));
     process.exit(1);
@@ -30,7 +30,7 @@ const main = async () => {
 
   const pkg = config.modules[0];
 
-  console.log(chalk.bold(`🧪 ==== Running checks for ${chalk.cyan.bold(`${pkg.name}`)} ====\n`));
+  console.log(chalk.bold(`🧪 ==== Running checks on ${chalk.cyan.bold(`${pkg.name}`)} package ====\n`));
 
   // transform info to JSON
   const pkgInfo = JSON.parse(
