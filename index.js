@@ -1,6 +1,5 @@
 const fs = require('fs');
 const path = require('path');
-const YAML = require('yaml');
 const axios = require('axios');
 const checker = require('license-checker');
 const chalk = require('chalk');
@@ -17,11 +16,11 @@ const main = async () => {
   // load orion config
   try {
     const configData = fs.readFileSync(
-      path.resolve(__dirname, '.orion.config.yaml'),
+      path.resolve(__dirname, '.orionrc.json'),
       { encoding: 'utf-8' }
     );
 
-    config = YAML.parse(configData);
+    config = JSON.parse(configData);
     console.log('\n🖖 Orion config loaded.\n');
   } catch (err) {
     console.log(chalk.red.bold(`\n🚫 Error loading config file: ${err}\n`));
@@ -78,10 +77,10 @@ const main = async () => {
   // check top level license
   const licenseOutput = '\nChecking top-level license'.padEnd(66, ' ');
 
-  if (config.licenses.pass.find((name) => name === pkgInfo.license)) {
+  if (config.licenses.allow.find((name) => name === pkgInfo.license)) {
     pass(licenseOutput);
   } else if (
-    config.licenses.fail.find((name) => name === pkgInfo.license) ||
+    config.licenses.block.find((name) => name === pkgInfo.license) ||
     !pkgInfo.license
   ) {
     fail(licenseOutput);
@@ -112,10 +111,10 @@ const main = async () => {
     // license output
     const output = `Checking license of ${chalk.cyan(key)}`.padEnd(75, ' ');
 
-    if (config.licenses.pass.find((name) => name === value.licenses)) {
+    if (config.licenses.allow.find((name) => name === value.licenses)) {
       pass(output);
     } else if (
-      config.licenses.fail.find((name) => name === value.licenses) ||
+      config.licenses.block.find((name) => name === value.licenses) ||
       !value.licenses
     ) {
       fail(output);

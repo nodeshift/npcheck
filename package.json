@@ -13,8 +13,7 @@
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "license-checker": "^25.0.1",
-    "mkdirp": "^1.0.4",
-    "yaml": "^1.10.0"
+    "mkdirp": "^1.0.4"
   },
   "devDependencies": {
     "eslint": "^7.18.0",
