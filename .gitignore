@@ -62,3 +62,7 @@ typings/
 # System Files
 .DS_Store
 Thumbs.db
+
+# NPCheck
+.npcheck.json
+.npcheck
