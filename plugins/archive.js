@@ -3,7 +3,7 @@ const { pass, fail } = require('../lib/logger');
 
 module.exports = async (context) => {
   // extract stuff from the context
-  const { pkgInfo, stats } = context;
+  const { pkgInfo, core } = context;
 
   const githubTarget = pkgInfo.repository.url
     .split('github.com/')[1]
@@ -20,7 +20,12 @@ module.exports = async (context) => {
   );
 
   if (data.archived) {
-    stats.errors++;
+    core.errors++;
+    core.logs.push({
+      type: 'error',
+      message:
+        `The repository of the "${pkgInfo.name}" module seems to be archived. (https://www.github.com/${githubTarget})`
+    });
     fail(archiveOutput);
   } else {
     pass(archiveOutput);

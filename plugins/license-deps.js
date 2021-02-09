@@ -11,7 +11,7 @@ const checkerInitAsync = promisify(checker.init);
 
 module.exports = async (context) => {
   // get stuff from context
-  const { pkgInfo, config, stats } = context;
+  const { pkgInfo, config, core } = context;
 
   // creating environment folder
   const envPath = path.resolve(process.cwd(), '.npcheck');
@@ -20,7 +20,7 @@ module.exports = async (context) => {
   let npmCommand = 'npm install';
 
   // build npm command
-  npmCommand = npmCommand.concat('--no-package-lock');
+  npmCommand = npmCommand.concat(' --no-package-lock');
   npmCommand = npmCommand.concat(` --prefix ${envPath}`);
   npmCommand = npmCommand.concat(` ${pkgInfo.name}`);
 
@@ -37,8 +37,10 @@ module.exports = async (context) => {
 
   // checking license of dependency tree
   const packageLicenses = await checkerInitAsync({ start: envPath });
+  // remove the module itself from the list
+  const moduleDependencies = Object.entries(packageLicenses).filter(([pkg]) => !pkg.includes(pkgInfo.name));
 
-  for (const [key, value] of Object.entries(packageLicenses)) {
+  for (const [key, value] of moduleDependencies) {
     // license output
     const output = `Checking license of ${chalk.cyan(key)}`.padEnd(75, ' ');
 
@@ -46,12 +48,20 @@ module.exports = async (context) => {
       pass(output);
     } else if (
       config.licenses.block.find((name) => name === value.licenses) ||
-        !value.licenses
+        !value.licenses || value.licenses === 'Unlicense'
     ) {
-      stats.errors++;
+      core.errors++;
+      core.logs.push({
+        type: 'error',
+        message: `The module "${pkgInfo.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`
+      });
       fail(output);
     } else {
-      stats.warnings++;
+      core.warnings++;
+      core.logs.push({
+        type: 'warning',
+        message: `The module "${pkgInfo.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`
+      });
       warn(output);
     }
   }

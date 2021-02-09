@@ -2,7 +2,7 @@ const { pass, fail, warn } = require('../lib/logger');
 
 module.exports = (context) => {
   // extract info from the context
-  const { config, pkgInfo, stats } = context;
+  const { config, pkgInfo, core } = context;
   // check top level license
   const licenseOutput = '\nChecking top-level license'.padEnd(66, ' ');
 
@@ -12,10 +12,18 @@ module.exports = (context) => {
     config.licenses.block.find((name) => name === pkgInfo.license) ||
       !pkgInfo.license
   ) {
-    stats.errors++;
+    core.errors++;
+    core.logs.push({
+      type: 'error',
+      message: `The module "${pkgInfo.name}" is under the non-acceptable license "${pkgInfo.license}".`
+    });
     fail(licenseOutput);
   } else {
-    stats.warnings++;
+    core.warnings++;
+    core.logs.push({
+      type: 'warning',
+      message: `The module "${pkgInfo.name}" is under the yet undetermined license "${pkgInfo.license}". (Manual review needed)`
+    });
     warn(licenseOutput);
   }
 

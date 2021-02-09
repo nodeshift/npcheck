@@ -3,7 +3,7 @@ const { pass, fail } = require('../lib/logger');
 
 module.exports = (context) => {
   // extract info from the context
-  const { pkg, stats } = context;
+  const { pkg, core } = context;
 
   // transform info to JSON
   const pkgInfo = JSON.parse(
@@ -17,7 +17,11 @@ module.exports = (context) => {
 
   // check if package is deprecated
   if (pkgInfo.deprecated === 'this version has been deprecated') {
-    stats.errors++;
+    core.errors++;
+    core.logs.push({
+      type: 'error',
+      message: `Package "${pkg.name}" seems to be deprecated on NPM. (${pkg.npmLink})`
+    });
     fail(deprecationOutput);
   } else {
     pass(deprecationOutput);

@@ -8,14 +8,18 @@ const plugins = [];
 const use = (plugin) => plugins.push(plugin);
 
 use(require('./plugins/deprecation'));
-// use(require('./plugins/archive'));
-// use(require('./plugins/license'));
+use(require('./plugins/archive'));
+use(require('./plugins/license'));
 use(require('./plugins/license-deps'));
 
 async function main () {
 // create new context instance
   const context = {
-    stats: { errors: 0, warnings: 0 }
+    core: {
+      errors: 0,
+      warnings: 0,
+      logs: []
+    }
   };
 
   // load npcheck config
@@ -53,13 +57,22 @@ async function main () {
     }
   }
 
+  // print error log
+  context.core.logs.forEach((log, index) => {
+    if (log.type === 'error') {
+      console.log(chalk.red(`\n(${index + 1}): ${log.message}`));
+    } else {
+      console.log(chalk.yellow(`\n(${index + 1}): ${log.message}`));
+    }
+  });
+
   // print check output
-  const { errors, warnings } = context.stats;
+  const { errors, warnings } = context.core;
   const total = errors + warnings;
   // format strings
-  const problemStr = total > 1 ? 'problems' : 'problem';
-  const errorStr = errors > 1 ? 'errors' : 'error';
-  const warningStr = warnings > 1 ? 'warnings' : 'warning';
+  const problemStr = total === 1 ? 'problems' : 'problem';
+  const errorStr = errors === 1 ? 'errors' : 'error';
+  const warningStr = warnings === 1 ? 'warnings' : 'warning';
   // output
   console.log(
     chalk.bold.red(
@@ -68,7 +81,7 @@ async function main () {
   );
 
   // if errors or warnings exists, exit unsuccessfully
-  if (total > 0) process.exit(1);
+  if (errors > 0) process.exit(1);
 }
 
 main();
