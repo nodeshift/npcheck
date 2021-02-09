@@ -17,13 +17,20 @@ module.exports = async (context) => {
   const envPath = path.resolve(process.cwd(), '.npcheck');
   await mkdirp(envPath);
 
+  let npmCommand = 'npm install';
+
+  // build npm command
+  npmCommand = npmCommand.concat('--no-package-lock');
+  npmCommand = npmCommand.concat(` --prefix ${envPath}`);
+  npmCommand = npmCommand.concat(` ${pkgInfo.name}`);
+
   // installing npm module
   const npmOutput = execSync(
-      `npm install --no-package-lock --prefix ${envPath} ${pkgInfo.name}`,
-      {
-        encoding: 'utf-8',
-        cwd: __dirname
-      }
+    npmCommand,
+    {
+      encoding: 'utf-8',
+      cwd: __dirname
+    }
   );
 
   console.log(chalk.magenta(npmOutput));
