@@ -14,7 +14,7 @@ module.exports = async (context) => {
   const { pkgInfo, config, core } = context;
 
   // creating environment folder
-  const envPath = path.resolve(process.cwd(), '.npcheck');
+  const envPath = path.resolve(process.cwd(), '.npcheck-env');
   await mkdirp(envPath);
 
   let npmCommand = 'npm install';
@@ -44,26 +44,39 @@ module.exports = async (context) => {
     // license output
     const output = `Checking license of ${chalk.cyan(key)}`.padEnd(75, ' ');
 
-    if (config.licenses.allow.find((name) => name === value.licenses)) {
+    // general allowed licenses
+    const licenses = config.licenses?.allow || [];
+    const licensesSpecific = config.licenses.rules[pkgInfo.name]?.allow || [];
+
+    // module specific allowed licenses
+    const licensePass = licenses.find((name) => name === value.licenses);
+    const licenseSpecificPass = licensesSpecific.find((name) => name === value.licenses);
+
+    if (licensePass || licenseSpecificPass) {
       pass(output);
-    } else if (
-      config.licenses.block.find((name) => name === value.licenses) ||
-        !value.licenses || value.licenses === 'Unlicense'
-    ) {
-      core.errors++;
-      core.logs.push({
-        type: 'error',
-        message: `The module "${pkgInfo.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`
-      });
-      fail(output);
-    } else {
+      continue;
+    }
+
+    // force pass licenses for specific module
+    const licenseOverrides = config.licenses.rules[pkgInfo.name]?.override || [];
+    const licenseForcePass = licenseOverrides.find((name) => name === value.licenses);
+
+    if (licenseForcePass) {
       core.warnings++;
       core.logs.push({
         type: 'warning',
         message: `The module "${pkgInfo.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`
       });
       warn(output);
+      continue;
     }
+
+    core.errors++;
+    core.logs.push({
+      type: 'error',
+      message: `The module "${pkgInfo.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`
+    });
+    fail(output);
   }
 
   // clean up node_modules
