@@ -11,6 +11,7 @@ use(require('./plugins/deprecation'));
 use(require('./plugins/archive'));
 use(require('./plugins/license'));
 use(require('./plugins/license-deps'));
+use(require('./plugins/tests'));
 
 async function main () {
 // create new context instance
@@ -70,9 +71,9 @@ async function main () {
   const { errors, warnings } = context.core;
   const total = errors + warnings;
   // format strings
-  const problemStr = total === 1 ? 'problems' : 'problem';
-  const errorStr = errors === 1 ? 'errors' : 'error';
-  const warningStr = warnings === 1 ? 'warnings' : 'warning';
+  const problemStr = total === 1 ? 'problem' : 'problems';
+  const errorStr = errors === 1 ? 'error' : 'errors';
+  const warningStr = warnings === 1 ? 'warning' : 'warnings';
   // output
   console.log(
     chalk.bold.red(
