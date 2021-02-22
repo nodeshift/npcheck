@@ -10,7 +10,7 @@ const use = (plugin) => plugins.push(plugin);
 use(require('./plugins/deprecation'));
 use(require('./plugins/archive'));
 use(require('./plugins/license'));
-use(require('./plugins/license-deps'));
+use(require('./plugins/licenseDeps'));
 use(require('./plugins/tests'));
 
 async function main () {
