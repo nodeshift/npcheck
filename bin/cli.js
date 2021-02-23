@@ -2,12 +2,29 @@ const chalk = require('chalk');
 const logSymbols = require('log-symbols');
 const createRunner = require('../lib/runner');
 
+// import plugins
+const npmDeprecationPlugin = require('../lib/plugins/npm-deprecation-plugin');
+const githubArchivePlugin = require('../lib/plugins/github-archive-plugin');
+const moduleLicensePlugin = require('../lib/plugins/module-license-plugin');
+const moduleTreeLicensePlugin = require('../lib/plugins/module-tree-license-plugin');
+const appropriateTestingPlugin = require('../lib/plugins/appropriate-testing-plugin');
+
 module.exports = async (options) => {
   try {
-    const runner = createRunner(options, null);
-    const response = await runner.start();
+    const runner = createRunner(
+      options,
+      [
+        npmDeprecationPlugin,
+        githubArchivePlugin,
+        moduleLicensePlugin,
+        moduleTreeLicensePlugin,
+        appropriateTestingPlugin
+      ]
+    );
 
-    response.logs.forEach((log, index) => {
+    const result = await runner.start();
+
+    result.logs.forEach((log, index) => {
       if (log.type === 'error') {
         console.log(chalk.red(`\n(${index + 1}): ${log.message}`));
       } else {
@@ -16,7 +33,7 @@ module.exports = async (options) => {
     });
 
     // print check output
-    const { errors, warnings } = response;
+    const { errors, warnings } = result;
     const total = errors + warnings;
 
     // format strings
