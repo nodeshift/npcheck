@@ -3,12 +3,9 @@ const cli = require('./cli');
 
 const { argv } = yargs
   .usage('[--options]')
-  .option('dev-deps', {
-    describe: 'Install also the development dependencies for modules',
-    choices: [true, false],
-    type: 'boolean',
-    default: false
-  })
+  .command(['run', '$0'], 'Starts check runner on modules', { cmd: { default: 'run' } })
+  .command('init', 'Create a configuration file', { cmd: { default: 'init' } })
+  .command('add', 'Add new module to config', { cmd: { default: 'add' } })
   .option('github-token', {
     describe: 'Custom GitHub token provided to the API for resources',
     type: 'string',
@@ -16,7 +13,7 @@ const { argv } = yargs
   });
 
 const options = {};
-options.devDeps = argv.devDeps || false;
-options.githubToken = argv.githubToken || null;
+options.cmd = argv.cmd;
+options.githubToken = argv.githubToken;
 
 cli(options);

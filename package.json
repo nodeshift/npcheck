@@ -17,6 +17,7 @@
     "license-checker": "^25.0.1",
     "log-symbols": "^4.0.0",
     "mkdirp": "^1.0.4",
+    "prompts": "^2.4.0",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
