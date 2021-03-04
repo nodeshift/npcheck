@@ -6,6 +6,7 @@ const figlet = require('figlet');
 const chalk = require('chalk');
 
 const deprecationPlugin = require('./plugins/deprecation');
+const archivePlugin = require('./plugins/archive');
 const { getInfoFromNPM } = require('./lib/npm');
 const { merge } = require('./lib/result');
 
@@ -30,11 +31,11 @@ module.exports = {
     }
 
     let result = [];
-    const plugins = [deprecationPlugin];
+    const plugins = [deprecationPlugin, archivePlugin];
 
     for await (const module of config.modules) {
       const nameFormat = chalk.cyan.bold(module.name);
-      console.log(chalk.bold(`Running checks on ${nameFormat}`));
+      console.log(chalk.bold(`\nRunning checks on ${nameFormat}`));
 
       const moduleInfo = getInfoFromNPM(module.name);
 
