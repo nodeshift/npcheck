@@ -64,5 +64,6 @@ typings/
 Thumbs.db
 
 # NPCheck
+npcheck.json
 .npcheck.json
 .npcheck
