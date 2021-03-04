@@ -2,7 +2,7 @@
   "name": "npcheck",
   "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "bin/npcheck.js",
   "scripts": {
     "start": "node .",
     "lint": "eslint .",
