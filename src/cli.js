@@ -7,6 +7,9 @@ const chalk = require('chalk');
 
 const deprecationPlugin = require('./plugins/deprecation');
 const archivePlugin = require('./plugins/archive');
+const licensePlugin = require('./plugins/license');
+const licenseTreePlugin = require('./plugins/licenseTree');
+
 const { getInfoFromNPM } = require('./lib/npm');
 const { merge } = require('./lib/result');
 
@@ -31,7 +34,7 @@ module.exports = {
     }
 
     let result = [];
-    const plugins = [deprecationPlugin, archivePlugin];
+    const plugins = [deprecationPlugin, archivePlugin, licensePlugin, licenseTreePlugin];
 
     for await (const module of config.modules) {
       const nameFormat = chalk.cyan.bold(module.name);
@@ -40,7 +43,7 @@ module.exports = {
       const moduleInfo = getInfoFromNPM(module.name);
 
       for await (const plugin of plugins) {
-        const status = await plugin(moduleInfo);
+        const status = await plugin(moduleInfo, config);
         result = merge(result, status);
       }
     }

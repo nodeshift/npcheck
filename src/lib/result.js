@@ -3,7 +3,7 @@ module.exports = {
     type: 'error',
     reason
   }),
-  warning: (reason) => ({
+  passThroughError: (reason) => ({
     type: 'warning',
     reason
   }),
