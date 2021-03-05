@@ -9,6 +9,7 @@ const deprecationPlugin = require('./plugins/deprecation');
 const archivePlugin = require('./plugins/archive');
 const licensePlugin = require('./plugins/license');
 const licenseTreePlugin = require('./plugins/licenseTree');
+const testsPlugin = require('./plugins/tests');
 
 const { getInfoFromNPM } = require('./lib/npm');
 const { merge } = require('./lib/result');
@@ -34,7 +35,14 @@ module.exports = {
     }
 
     let result = [];
-    const plugins = [deprecationPlugin, archivePlugin, licensePlugin, licenseTreePlugin];
+
+    const plugins = [
+      deprecationPlugin,
+      archivePlugin,
+      licensePlugin,
+      licenseTreePlugin,
+      testsPlugin
+    ];
 
     for await (const module of config.modules) {
       const nameFormat = chalk.cyan.bold(module.name);

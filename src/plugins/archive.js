@@ -2,8 +2,8 @@ const axios = require('axios');
 const { error } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
 
-module.exports = async (moduleInfo) => {
-  const githubTarget = moduleInfo.repository.url
+module.exports = async (module) => {
+  const githubTarget = module.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
 
@@ -12,7 +12,7 @@ module.exports = async (moduleInfo) => {
 
   if (repo.deprecated) {
     failure(output.get());
-    return error(`The repository of the "${moduleInfo.name}" module seems to be archived. (https://www.github.com/${githubTarget})`);
+    return error(`The repository of the "${module.name}" module seems to be archived. (https://www.github.com/${githubTarget})`);
   }
 
   success(output.get());
