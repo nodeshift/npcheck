@@ -48,6 +48,19 @@ module.exports = {
       }
     }
 
-    console.log(result);
+    console.log(chalk.white.bold('\nNPCheck Report'));
+
+    result.forEach((log, index) => {
+      if (log.type === 'error') {
+        console.log(chalk.red(`\n(${index + 1}): ${log.reason}`));
+      } else {
+        console.log(chalk.yellow(`\n(${index + 1}): ${log.reason}`));
+      }
+    });
+
+    const errors = result.filter(log => log.type === 'error');
+    const warnings = result.filter(log => log.type === 'warnings');
+
+    console.log(chalk.red.bold(`\nproblems: ${result.length} (errors: ${errors.length} - warnings: ${warnings.length})\n`));
   }
 };
