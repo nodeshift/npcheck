@@ -70,5 +70,8 @@ module.exports = {
     const warnings = result.filter(log => log.type === 'warnings');
 
     console.log(chalk.red.bold(`\nproblems: ${result.length} (errors: ${errors.length} - warnings: ${warnings.length})\n`));
+
+    // If we have errors signal to the CI that something is wrong
+    if (errors.length > 0) process.exit(1);
   }
 };
