@@ -14,7 +14,7 @@ const failure = (text, label = 'FAIL') => {
 };
 
 const warning = (text, label = 'WARN') => {
-  console.log(`${text}${chalk.white.bgRed.bold(` ${label} `)}`);
+  console.log(`${text}${chalk.black.bgYellow.bold(` ${label} `)}`);
 };
 
 const printStatuses = (statuses) => {
