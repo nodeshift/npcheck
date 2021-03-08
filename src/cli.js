@@ -67,7 +67,7 @@ module.exports = {
     });
 
     const errors = result.filter(log => log.type === 'error');
-    const warnings = result.filter(log => log.type === 'warnings');
+    const warnings = result.filter(log => log.type === 'warning');
 
     console.log(chalk.red.bold(`\nproblems: ${result.length} (errors: ${errors.length} - warnings: ${warnings.length})\n`));
 
