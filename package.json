@@ -12,15 +12,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@octokit/rest": "^18.3.2",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
     "figlet": "^1.5.0",
     "license-checker": "^25.0.1",
-    "log-symbols": "^4.0.0",
-    "mkdirp": "^1.0.4",
-    "prompts": "^2.4.0",
+    "ramda": "^0.27.1",
     "yargs": "^16.2.0"
   },
   "devDependencies": {
