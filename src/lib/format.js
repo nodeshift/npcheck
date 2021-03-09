@@ -18,7 +18,7 @@ const warning = (text, label = 'WARN') => {
 };
 
 const printStatuses = (statuses) => {
-  statuses.forEach(status => {
+  statuses.forEach((status) => {
     console.log(`\n${chalk.yellow(status.context)}`);
     console.log(status.description);
     console.log(status.target_url);

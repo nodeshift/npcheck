@@ -8,11 +8,16 @@ module.exports = async (module, _, options) => {
     .replace('.git', '');
 
   const repo = await fetchGithub(`/repos/${githubTarget}`, options.githubToken);
-  const output = stringBuilder('Checking if github repository is archived').withPadding(65);
+
+  const output = stringBuilder(
+    'Checking if github repository is archived'
+  ).withPadding(65);
 
   if (repo.deprecated) {
     failure(output.get());
-    return error(`The repository of the "${module.name}" module seems to be archived. (https://www.github.com/${githubTarget})`);
+    return error(
+      `The repository of the "${module.name}" module seems to be archived. (https://www.github.com/${githubTarget})`
+    );
   }
 
   success(output.get());

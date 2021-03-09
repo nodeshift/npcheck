@@ -18,7 +18,10 @@ module.exports = async (module, config) => {
   console.log(chalk.gray('\nDownloading module dependencies...'));
 
   const npmCommand = buildInstallCommand(module.name, envFolderPath);
-  const npmOutput = await execSync(npmCommand, { encoding: 'utf-8', cwd: __dirname });
+  const npmOutput = await execSync(npmCommand, {
+    encoding: 'utf-8',
+    cwd: __dirname
+  });
 
   console.log(chalk.magenta(npmOutput));
 
@@ -26,18 +29,25 @@ module.exports = async (module, config) => {
   const depLicenses = await checkerAsync({ start: envFolderPath });
 
   // Remove module from the list
-  const dependencies = Object.entries(depLicenses).filter(([pkg]) => !pkg.includes(module.name));
+  const dependencies = Object.entries(depLicenses).filter(
+    ([pkg]) => !pkg.includes(module.name)
+  );
 
   const results = [];
 
   for (const [key, value] of dependencies) {
     // Creating license list
-    const output = stringBuilder(`Checking license of ${chalk.cyan(key)}`).withPadding(75);
+    const output = stringBuilder(
+      `Checking license of ${chalk.cyan(key)}`
+    ).withPadding(75);
+
     const licenses = config.licenses?.allow || [];
     const licensesSpecific = config.licenses.rules[module.name]?.allow || [];
 
     const licensePass = licenses.find((name) => name === value.licenses);
-    const licenseSpecificPass = licensesSpecific.find((name) => name === value.licenses);
+    const licenseSpecificPass = licensesSpecific.find(
+      (name) => name === value.licenses
+    );
 
     if (licensePass || licenseSpecificPass) {
       success(output.get());
@@ -46,12 +56,16 @@ module.exports = async (module, config) => {
 
     // Creating license list specific for module
     const licenseOverrides = config.licenses.rules[module.name]?.override || [];
-    const licenseForcePass = licenseOverrides.find((name) => name === value.licenses);
+    const licenseForcePass = licenseOverrides.find(
+      (name) => name === value.licenses
+    );
 
     if (licenseForcePass) {
       warning(output.get(), 'FORCE');
       results.push(
-        passThroughError(`The module "${module.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`)
+        passThroughError(
+          `The module "${module.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`
+        )
       );
       continue;
     }
@@ -59,7 +73,9 @@ module.exports = async (module, config) => {
     // Nothing is accepted treat license as an error
     failure(output.get());
     results.push(
-      error(`The module "${module.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`)
+      error(
+        `The module "${module.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`
+      )
     );
   }
 

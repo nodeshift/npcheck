@@ -20,7 +20,10 @@ module.exports = {
   run: async (options) => {
     clear();
 
-    const asciiText = await figletPromise('NPCheck CLI', { font: 'Standard', width: 80 });
+    const asciiText = await figletPromise('NPCheck CLI', {
+      font: 'Standard',
+      width: 80
+    });
     console.log(asciiText);
 
     let config;
@@ -66,10 +69,14 @@ module.exports = {
       }
     });
 
-    const errors = result.filter(log => log.type === 'error');
-    const warnings = result.filter(log => log.type === 'warning');
+    const errors = result.filter((log) => log.type === 'error');
+    const warnings = result.filter((log) => log.type === 'warning');
 
-    console.log(chalk.red.bold(`\nproblems: ${result.length} (errors: ${errors.length} - warnings: ${warnings.length})\n`));
+    console.log(
+      chalk.red.bold(
+        `\nproblems: ${result.length} (errors: ${errors.length} - warnings: ${warnings.length})\n`
+      )
+    );
 
     // If we have errors signal to the CI that something is wrong
     if (errors.length > 0) process.exit(1);
