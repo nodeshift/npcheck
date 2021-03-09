@@ -1,13 +1,13 @@
-const axios = require('axios');
 const { error } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
+const { fetchGithub } = require('../lib/fetch');
 
-module.exports = async (module) => {
+module.exports = async (module, _, options) => {
   const githubTarget = module.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
 
-  const { data: repo } = await axios.get(`https://api.github.com/repos/${githubTarget}`);
+  const repo = await fetchGithub(`/repos/${githubTarget}`, options.githubToken);
   const output = stringBuilder('Checking if github repository is archived').withPadding(65);
 
   if (repo.deprecated) {

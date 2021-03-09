@@ -10,4 +10,6 @@ const options = yargs
     default: null
   }).argv;
 
+options.githubToken = options['github-token'] || process.env.GITHUB_TOKEN || null;
+
 cli.run(options);

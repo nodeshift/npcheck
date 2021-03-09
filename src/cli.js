@@ -51,7 +51,7 @@ module.exports = {
       const moduleInfo = getInfoFromNPM(module.name);
 
       for await (const plugin of plugins) {
-        const status = await plugin(moduleInfo, config);
+        const status = await plugin(moduleInfo, config, options);
         result = merge(result, status);
       }
     }
