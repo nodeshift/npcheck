@@ -61,7 +61,7 @@ module.exports = async (module, config) => {
     );
 
     if (licenseForcePass) {
-      warning(output.get(), 'FORCE');
+      warning(output.get());
       results.push(
         passThroughError(
           `The module "${module.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`

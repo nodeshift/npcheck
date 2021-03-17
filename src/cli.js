@@ -10,6 +10,7 @@ const archivePlugin = require('./plugins/archive');
 const licensePlugin = require('./plugins/license');
 const licenseTreePlugin = require('./plugins/licenseTree');
 const testsPlugin = require('./plugins/tests');
+const maintenancePlugin = require('./plugins/maintenance');
 
 const { getInfoFromNPM } = require('./lib/npm');
 const { merge } = require('./lib/result');
@@ -44,7 +45,8 @@ module.exports = {
       archivePlugin,
       licensePlugin,
       licenseTreePlugin,
-      testsPlugin
+      testsPlugin,
+      maintenancePlugin
     ];
 
     for await (const module of config.modules) {

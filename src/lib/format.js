@@ -25,9 +25,14 @@ const printStatuses = (statuses) => {
   });
 };
 
+const printWarning = (message) => {
+  console.log(chalk.yellow(message));
+};
+
 module.exports = {
   stringBuilder,
   printStatuses,
+  printWarning,
   success,
   failure,
   warning
