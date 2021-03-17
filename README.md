@@ -1,6 +1,6 @@
 # npcheck
 
-"Node Package Checker" - a tool to run various checks on npm modules
+"Node Package Checker" - A tool to run various checks on npm modules
 
 ## Prerequisites
 
@@ -34,7 +34,7 @@ Npcheck requires a configuration file where custom behavior can be specified. Th
 
 ### Example
 
-A sample npcheck configuration file.
+A simple npcheck configuration file.
 
 ```json
 {
