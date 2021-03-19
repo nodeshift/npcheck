@@ -1,7 +1,17 @@
 {
   "name": "npcheck",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A tool to run various checks on npm modules",
+  "keywords": [],
+  "author": "Red Hat, Inc.",
+  "license": "ISC",
+  "repository": "https://github.com/nodeshift/npcheck.git",
+  "contributors": [
+    {
+      "name": "Alex Alikiotis",
+      "email": "alexalikiotis5@gmail.com"
+    }
+  ],
   "main": "index.js",
   "bin": {
     "npcheck": "index.js"
@@ -11,9 +21,6 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
   "dependencies": {
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
