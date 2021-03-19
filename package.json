@@ -1,7 +1,7 @@
 {
   "name": "npcheck",
   "version": "0.1.0",
-  "description": "",
+  "description": "A tool to run various checks on npm modules",
   "main": "index.js",
   "bin": {
     "npcheck": "index.js"
