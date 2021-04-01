@@ -1,7 +1,7 @@
 const { error } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
 
-module.exports = async (module) => {
+const deprecationPlugin = async (module) => {
   const output = stringBuilder(
     "\nChecking if it's deprecated on NPM"
   ).withPadding(66);
@@ -18,3 +18,5 @@ module.exports = async (module) => {
   success(output.get());
   return null;
 };
+
+module.exports = deprecationPlugin;

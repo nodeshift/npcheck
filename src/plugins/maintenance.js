@@ -6,7 +6,7 @@ const { fetchGithub } = require('../lib/fetch');
 
 const SIX_MONTHS = 183; // in days
 
-module.exports = async (module, _, options) => {
+const maintenancePlugin = async (module, _, options) => {
   const githubTarget = module.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
@@ -40,3 +40,5 @@ module.exports = async (module, _, options) => {
   success(output.get());
   return null;
 };
+
+module.exports = maintenancePlugin;

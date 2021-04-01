@@ -1,7 +1,7 @@
 const { stringBuilder, success, failure } = require('../lib/format');
 const { error } = require('../lib/result');
 
-module.exports = async (module, config) => {
+const licensePlugin = async (module, config) => {
   const licenses = config?.licenses?.allow || [];
   const isLicenseAllowed = licenses.find((name) => name === module?.license);
 
@@ -17,3 +17,5 @@ module.exports = async (module, config) => {
   success(output.get());
   return null;
 };
+
+module.exports = licensePlugin;

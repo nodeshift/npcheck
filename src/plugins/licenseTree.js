@@ -11,7 +11,7 @@ const { error, passThroughError } = require('../lib/result');
 
 const checkerAsync = util.promisify(checker.init);
 
-module.exports = async (module, config) => {
+const licenseTreePlugin = async (module, config) => {
   const envFolderPath = path.resolve(process.cwd(), 'npcheck-env');
   fs.mkdirSync(envFolderPath);
 
@@ -82,3 +82,5 @@ module.exports = async (module, config) => {
   fs.rmdirSync(envFolderPath, { recursive: true });
   return results;
 };
+
+module.exports = licenseTreePlugin;
