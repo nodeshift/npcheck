@@ -8,7 +8,7 @@ const {
   failure
 } = require('../lib/format');
 
-module.exports = async (module, _, options) => {
+const testsPlugin = async (module, _, options) => {
   // Find npm test script (if exists)
   const npmScripts = module.scripts || [];
   const npmTestCommand = Object.keys(npmScripts).find((cmd) =>
@@ -67,3 +67,5 @@ module.exports = async (module, _, options) => {
     `The "${module.name}" seems that is lacking appropriate testing (https://www.github.com/${githubTarget})`
   );
 };
+
+module.exports = testsPlugin;

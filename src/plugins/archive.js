@@ -2,7 +2,7 @@ const { error } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
 const { fetchGithub } = require('../lib/fetch');
 
-module.exports = async (module, _, options) => {
+const archivePlugin = async (module, _, options) => {
   const githubTarget = module.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
@@ -23,3 +23,5 @@ module.exports = async (module, _, options) => {
   success(output.get());
   return null;
 };
+
+module.exports = archivePlugin;
