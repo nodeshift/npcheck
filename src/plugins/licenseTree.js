@@ -42,7 +42,7 @@ const licenseTreePlugin = async (module, config) => {
     ).withPadding(75);
 
     const licenses = config.licenses?.allow || [];
-    const licensesSpecific = config.licenses.rules[module.name]?.allow || [];
+    const licensesSpecific = config.licenses?.rules[module.name]?.allow || [];
 
     const licensePass = licenses.find((name) => name === value.licenses);
     const licenseSpecificPass = licensesSpecific.find(

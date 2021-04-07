@@ -10,7 +10,7 @@ const fetchGithub = async (target, token, override = false) => {
   const url = override ? target : `${github}${target}`;
   const options = {
     headers: {
-      Authorization: token || ''
+      Authorization: token ? `token ${token}` : ''
     }
   };
   const response = await axios.get(url, options);
