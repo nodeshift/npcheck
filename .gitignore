@@ -65,5 +65,4 @@ Thumbs.db
 
 # NPCheck
 npcheck.json
-.npcheck.json
-.npcheck
+npcheck-env
