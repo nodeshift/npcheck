@@ -4,7 +4,7 @@
 
 ## Prerequisites
 
-- Node.js - version 12.x or greater
+- Node.js - version 14.x or greater
 
 ## Install
 
@@ -83,5 +83,6 @@ Options:
   --help                Show help                                      [boolean]
   --version             Show version number                            [boolean]
   --github-token, --gt  Custom GitHub token provided to the API for resources
+                        (env variable GITHUB_TOKEN is also an option)
                                                         [string] [default: null]
 ```

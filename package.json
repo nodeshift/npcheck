@@ -1,6 +1,6 @@
 {
   "name": "npcheck",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A tool to run various checks on npm modules",
   "keywords": [],
   "author": "Red Hat, Inc.",
@@ -10,6 +10,10 @@
     {
       "name": "Alex Alikiotis",
       "email": "alexalikiotis5@gmail.com"
+    },
+    {
+      "name": "Helio Frota",
+      "email": "00hf11@gmail.com"
     }
   ],
   "main": "index.js",
