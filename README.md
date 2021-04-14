@@ -2,6 +2,8 @@
 
 "Node Package Checker" - A tool to run various checks on npm modules
 
+[![Coverage Status](https://coveralls.io/repos/github/nodeshift/npcheck/badge.svg?branch=main)](https://coveralls.io/github/nodeshift/npcheck?branch=main)
+
 ## Prerequisites
 
 - Node.js - version 14.x or greater
