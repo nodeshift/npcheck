@@ -2,6 +2,7 @@
 
 "Node Package Checker" - A tool to run various checks on npm modules
 
+![Node.js CI](https://github.com/nodeshift/npcheck/workflows/Node.js%20CI/badge.svg)
 [![Coverage Status](https://coveralls.io/repos/github/nodeshift/npcheck/badge.svg?branch=main)](https://coveralls.io/github/nodeshift/npcheck?branch=main)
 
 ## Prerequisites
