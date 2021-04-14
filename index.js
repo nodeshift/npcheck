@@ -1,6 +1,7 @@
 #! /usr/bin/env node
 
 const yargs = require('yargs');
+const chalk = require('chalk');
 const cli = require('./src/cli');
 const clean = require('./src/lib/clean');
 
@@ -17,6 +18,17 @@ options.githubToken = options['github-token'] || process.env.GITHUB_TOKEN;
 
 cli.run(options);
 
-// Clean npcheck-env directory on uncaughtException and SIGINT (aka Ctrl +C)
-process.on('uncaughtException', clean);
+// output error stack trace on uncaughtException and unhandledRejection
+process.on('uncaughtException', err => {
+  console.log(chalk.red.bold(err.stack));
+  process.exit(1);
+});
+
+process.on('unhandledRejection', err => {
+  console.log(chalk.red.bold(err.stack));
+  process.exit(1);
+});
+
+// clean-up hook before exiting the node.js process
+process.on('exit', clean);
 process.on('SIGINT', clean);
