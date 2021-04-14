@@ -21,11 +21,12 @@
     "npcheck": "index.js"
   },
   "scripts": {
+    "start": "node .",
     "prepare": "husky install",
     "pretest": "eslint --ignore-path .gitignore",
+    "lint:fix": "eslint . --fix",
     "test": "jest --no-color",
-    "start": "node .",
-    "lint:fix": "eslint . --fix"
+    "coverage": "jest --coverage"
   },
   "dependencies": {
     "axios": "^0.21.1",
@@ -38,6 +39,7 @@
     "yargs": "^16.2.0"
   },
   "devDependencies": {
+    "coveralls": "^3.1.0",
     "eslint": "^7.18.0",
     "eslint-config-semistandard": "^15.0.1",
     "eslint-config-standard": "^16.0.2",

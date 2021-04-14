@@ -26,4 +26,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm test
+    - run: npm run coverage
+    - run: echo 'repo_token:' ${{ secrets.COVERALLS_GITHUB_TOKEN }} > ./.coveralls.yml
+    - run: cat coverage/lcov.info | node_modules/coveralls/bin/coveralls.js
     - run: npx @pkgjs/support validate
