@@ -19,21 +19,21 @@ Npcheck requires a configuration file where custom behavior can be specified. Th
 
 ### Options
 
-- `modules`: The list of specified modules that npcheck will run checks on. *(type: Array)*
+- `modules`: The list of specified modules that npcheck will run checks on. _(type: Array)_
 
-- `[module].name`: The name of the npm module. *(type: String)*
+- `[module].name`: The name of the npm module. _(type: String)_
 
-- `[module].npmLink`: Module's NPM url/link *(type: String)*
+- `[module].npmLink`: Module's NPM url/link _(type: String)_
 
-- `licenses`: Config object to define custom license check behavior. *(type: Object)*
+- `licenses`: Config object to define custom license check behavior. _(type: Object)_
 
-- `licenses.allow`: List that defines global allowed licenses. *(type: Array)*
+- `licenses.allow`: List that defines global allowed licenses. _(type: Array)_
 
-- `licenses.rules`: Custom per module rules about license checks. *(type: Object)*
+- `licenses.rules`: Custom per module rules about license checks. _(type: Object)_
 
-- `licenses.rules[module].allow`: Allowed licenses only for the specified module. *(type: Array)*
+- `licenses.rules[module].allow`: Allowed licenses only for the specified module. _(type: Array)_
 
-- `licenses.rules[modules].override`: List of licenses that the cli will treat as warnings (future license decisions to be made) but won't break the CI. *(type: Array)*
+- `licenses.rules[modules].override`: List of licenses that the cli will treat as warnings (future license decisions to be made) but won't break the CI. _(type: Array)_
 
 ### Example
 
@@ -45,20 +45,11 @@ A simple npcheck configuration file.
     {
       "name": "express",
       "npmLink": "https://www.npmjs.com/package/express"
-    },
-    {
-      "name": "eslint",
-      "npmLink": "https://www.npmjs.com/package/eslint"
     }
   ],
   "licenses": {
     "allow": ["MIT", "Apache-2.0"],
-    "rules": {
-      "express": {
-        "allow": ["ISC"],
-        "override": ["BSD-2-Clause", "BSD-3-Clause"]
-      }
-    }
+    "rules": {}
   }
 }
 ```
