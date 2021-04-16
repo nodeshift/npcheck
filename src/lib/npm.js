@@ -7,7 +7,7 @@ module.exports = {
   },
   buildInstallCommand: (name, path) => {
     return 'npm install'
-      .concat(' --no-package-lock')
+      .concat(' --no-package-lock --silent')
       .concat(` --prefix ${path}`)
       .concat(` ${name}`);
   }
