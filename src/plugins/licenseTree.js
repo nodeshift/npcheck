@@ -23,7 +23,7 @@ const licenseTreePlugin = async (module, config) => {
     cwd: __dirname
   });
 
-  console.log(chalk.magenta(npmOutput));
+  console.log(chalk.magenta(`\n${npmOutput}`));
 
   // Run license checker on npcheck-env directory
   const depLicenses = await checkerAsync({ start: envFolderPath });
