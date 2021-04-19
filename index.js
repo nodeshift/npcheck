@@ -6,25 +6,33 @@ const cli = require('./src/cli');
 const clean = require('./src/lib/clean');
 
 const options = yargs
+  .parserConfiguration({
+    'boolean-negation': false
+  })
   .usage('Usage: npcheck [--options]')
   .option('github-token', {
-    alias: 'gt',
     description: 'Custom GitHub token provided to the API for resources',
     type: 'string',
     default: null
+  })
+  .option('no-errors', {
+    description: 'Treats every error as a warning',
+    type: 'boolean',
+    default: false
   }).argv;
 
 options.githubToken = options['github-token'] || process.env.GITHUB_TOKEN;
+options.noErrors = options['no-errors'] || false;
 
 cli.run(options);
 
 // output error stack trace on uncaughtException and unhandledRejection
-process.on('uncaughtException', err => {
+process.on('uncaughtException', (err) => {
   console.log(chalk.red.bold(err.stack));
   process.exit(1);
 });
 
-process.on('unhandledRejection', err => {
+process.on('unhandledRejection', (err) => {
   console.log(chalk.red.bold(err.stack));
   process.exit(1);
 });
