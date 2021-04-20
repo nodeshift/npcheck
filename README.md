@@ -66,17 +66,22 @@ Outputs the current version of npcheck.
 
 GitHub's OAuth token npcheck will use when contacting the GitHub API.
 
+**no-errors**
+
+Treats all errors as warnings.
+
 **help**
 
 Shows the below help.
 
 ```sh
-Usage: npcheck [--options]
+Usage: npcheck [options]
 
 Options:
   --help                Show help                                      [boolean]
   --version             Show version number                            [boolean]
-  --github-token, --gt  Custom GitHub token provided to the API for resources
+  --github-token        Custom GitHub token provided to the API for resources
                         (env variable GITHUB_TOKEN is also an option)
                                                         [string] [default: null]
+  --no-errors     Treats every error as a warning     [boolean] [default: false]
 ```

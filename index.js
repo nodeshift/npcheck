@@ -9,7 +9,7 @@ const options = yargs
   .parserConfiguration({
     'boolean-negation': false
   })
-  .usage('Usage: npcheck [--options]')
+  .usage('Usage: npcheck [options]')
   .option('github-token', {
     description: 'Custom GitHub token provided to the API for resources',
     type: 'string',
