@@ -61,6 +61,11 @@ module.exports = {
       }
     }
 
+    // check if the no-errors flag is set
+    result = options.noErrors
+      ? result.map(({ type, ...rest }) => ({ type: 'warning', ...rest }))
+      : result;
+
     console.log(chalk.white.bold('\nNPCheck Report'));
 
     result.forEach((log, index) => {
