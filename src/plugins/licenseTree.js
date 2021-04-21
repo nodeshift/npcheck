@@ -44,23 +44,24 @@ const licenseTreePlugin = async (module, config) => {
     const licenses = config.licenses?.allow || [];
     const licensesSpecific = config.licenses?.rules[module.name]?.allow || [];
 
-    const licensePass = licenses.find((name) => name === value.licenses);
-    const licenseSpecificPass = licensesSpecific.find(
-      (name) => name === value.licenses
+    const isPassing = [...licenses, ...licensesSpecific].find((name) =>
+      value.licenses.includes(name)
     );
 
-    if (licensePass || licenseSpecificPass) {
+    if (isPassing) {
       success(output.get());
       continue;
     }
 
-    // Creating license list specific for module
-    const licenseOverrides = config.licenses.rules[module.name]?.override || [];
-    const licenseForcePass = licenseOverrides.find(
-      (name) => name === value.licenses
+    // Creating license list for the specific module
+    const licenseOverrides =
+      config.licenses?.rules[module.name]?.override || [];
+
+    const isForcePassing = licenseOverrides.find((name) =>
+      value.licenses.includes(name)
     );
 
-    if (licenseForcePass) {
+    if (isForcePassing) {
       warning(output.get());
       results.push(
         passThroughError(
