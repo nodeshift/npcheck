@@ -8,6 +8,7 @@ const checker = require('license-checker');
 const { buildInstallCommand } = require('../lib/npm');
 const { stringBuilder, success, warning, failure } = require('../lib/format');
 const { error, passThroughError } = require('../lib/result');
+const { matchLicenses } = require('../lib/regex');
 
 const checkerAsync = util.promisify(checker.init);
 
@@ -45,7 +46,7 @@ const licenseTreePlugin = async (module, config) => {
     const licensesSpecific = config.licenses?.rules[module.name]?.allow || [];
 
     const isPassing = [...licenses, ...licensesSpecific].find((name) =>
-      value.licenses.includes(name)
+      matchLicenses(value, name)
     );
 
     if (isPassing) {
@@ -58,7 +59,7 @@ const licenseTreePlugin = async (module, config) => {
       config.licenses?.rules[module.name]?.override || [];
 
     const isForcePassing = licenseOverrides.find((name) =>
-      value.licenses.includes(name)
+      matchLicenses(value, name)
     );
 
     if (isForcePassing) {
