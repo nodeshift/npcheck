@@ -8,6 +8,7 @@ const checker = require('license-checker');
 const { buildInstallCommand } = require('../lib/npm');
 const { stringBuilder, success, warning, failure } = require('../lib/format');
 const { error, passThroughError } = require('../lib/result');
+const { matchLicenses } = require('../lib/regex');
 
 const checkerAsync = util.promisify(checker.init);
 
@@ -44,23 +45,24 @@ const licenseTreePlugin = async (module, config) => {
     const licenses = config.licenses?.allow || [];
     const licensesSpecific = config.licenses?.rules[module.name]?.allow || [];
 
-    const licensePass = licenses.find((name) => name === value.licenses);
-    const licenseSpecificPass = licensesSpecific.find(
-      (name) => name === value.licenses
+    const isPassing = [...licenses, ...licensesSpecific].find((name) =>
+      matchLicenses(value, name)
     );
 
-    if (licensePass || licenseSpecificPass) {
+    if (isPassing) {
       success(output.get());
       continue;
     }
 
-    // Creating license list specific for module
-    const licenseOverrides = config.licenses.rules[module.name]?.override || [];
-    const licenseForcePass = licenseOverrides.find(
-      (name) => name === value.licenses
+    // Creating license list for the specific module
+    const licenseOverrides =
+      config.licenses?.rules[module.name]?.override || [];
+
+    const isForcePassing = licenseOverrides.find((name) =>
+      matchLicenses(value, name)
     );
 
-    if (licenseForcePass) {
+    if (isForcePassing) {
       warning(output.get());
       results.push(
         passThroughError(
