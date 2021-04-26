@@ -46,7 +46,7 @@ const licenseTreePlugin = async (module, config) => {
     const licensesSpecific = config.licenses?.rules[module.name]?.allow || [];
 
     const isPassing = [...licenses, ...licensesSpecific].find((name) =>
-      matchLicenses(value, name)
+      matchLicenses(value.licenses, name)
     );
 
     if (isPassing) {
@@ -59,7 +59,7 @@ const licenseTreePlugin = async (module, config) => {
       config.licenses?.rules[module.name]?.override || [];
 
     const isForcePassing = licenseOverrides.find((name) =>
-      matchLicenses(value, name)
+      matchLicenses(value.licenses, name)
     );
 
     if (isForcePassing) {
