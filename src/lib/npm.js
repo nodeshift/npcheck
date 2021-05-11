@@ -6,7 +6,7 @@ module.exports = {
     return JSON.parse(data);
   },
   buildInstallCommand: (name, path) => {
-    return 'npm install'
+    return 'npm install>out 2>error'
       .concat(' --no-package-lock --silent')
       .concat(` --prefix ${path}`)
       .concat(` ${name}`);
