@@ -1,11 +1,11 @@
 const R = require('ramda');
-const { error } = require('../lib/result');
+const { passThroughError } = require('../lib/result');
 const { fetchGithub } = require('../lib/fetch');
 const {
   stringBuilder,
   printStatuses,
   success,
-  failure
+  warning
 } = require('../lib/format');
 
 const testsPlugin = async (module, _, options) => {
@@ -61,9 +61,9 @@ const testsPlugin = async (module, _, options) => {
     return null;
   }
 
-  failure(testOutput.get());
+  warning(testOutput.get());
   printStatuses(statuses);
-  return error(
+  return passThroughError(
     `The "${module.name}" seems that is lacking appropriate testing (https://www.github.com/${githubTarget})`
   );
 };

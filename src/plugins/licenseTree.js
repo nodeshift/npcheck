@@ -19,7 +19,7 @@ const licenseTreePlugin = async (module, config) => {
   console.log(chalk.gray('\nDownloading module dependencies...'));
 
   const npmCommand = buildInstallCommand(module.name, envFolderPath);
-  const npmOutput = await execSync(npmCommand, {
+  const npmOutput = execSync(npmCommand, {
     encoding: 'utf-8',
     cwd: __dirname
   });
