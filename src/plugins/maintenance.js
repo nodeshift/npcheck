@@ -1,7 +1,7 @@
 const R = require('ramda');
 const { differenceInDays, formatDistanceToNow } = require('date-fns');
 const { passThroughError } = require('../lib/result');
-const { stringBuilder, printWarning, success, warning } = require('../lib/format');
+const { stringBuilder, success, warning } = require('../lib/format');
 const { fetchGithub } = require('../lib/fetch');
 
 const SIX_MONTHS = 183; // in days
@@ -11,7 +11,9 @@ const maintenancePlugin = async (module, _, options) => {
     .split('github.com/')[1]
     .replace('.git', '');
 
-  const output = stringBuilder('\nChecking maintenance metrics').withPadding(66);
+  const output = stringBuilder('\nChecking maintenance metrics').withPadding(
+    66
+  );
 
   const releases = await fetchGithub(
     `/repos/${githubTarget}/releases`,
@@ -31,9 +33,8 @@ const maintenancePlugin = async (module, _, options) => {
 
   if (difference > SIX_MONTHS) {
     warning(output.get());
-    const reason =
-      `The latest release of "${module.name}" was ${formatDistanceToNow(releaseDate)} ago`;
-    printWarning(`\n${reason}`);
+    const distance = formatDistanceToNow(releaseDate);
+    const reason = `The latest release of "${module.name}" was ${distance} ago`;
     return passThroughError(reason);
   }
 

@@ -6,9 +6,15 @@ const chalk = require('chalk');
 const checker = require('license-checker');
 
 const { buildInstallCommand } = require('../lib/npm');
-const { stringBuilder, success, warning, failure } = require('../lib/format');
 const { error, passThroughError } = require('../lib/result');
 const { matchLicenses } = require('../lib/regex');
+const {
+  stringBuilder,
+  success,
+  warning,
+  failure,
+  createErrorLog
+} = require('../lib/format');
 
 const checkerAsync = util.promisify(checker.init);
 
@@ -19,12 +25,26 @@ const licenseTreePlugin = async (module, config) => {
   console.log(chalk.gray('\nDownloading module dependencies...'));
 
   const npmCommand = buildInstallCommand(module.name, envFolderPath);
-  const npmOutput = execSync(npmCommand, {
-    encoding: 'utf-8',
-    cwd: __dirname
-  });
 
-  console.log(chalk.magenta(`\n${npmOutput}`));
+  // When a module can't be installed using NPM log the output to `npcheck-errors.log`
+  try {
+    execSync(npmCommand, {
+      encoding: 'utf-8',
+      cwd: __dirname,
+      stdio: 'pipe'
+    });
+  } catch (err) {
+    const logs = chalk.italic('npcheck-errors.log');
+    console.log(chalk.red.bold(`\nFailed to install ${module.name}...\n`));
+    createErrorLog(err.message);
+    return error(
+      `Module "${module.name}" couldn't be installed. Check ${logs} for more information.`
+    );
+  }
+
+  console.log(
+    chalk.magenta(`\n${module.name}@${module.version} has been installed.\n`)
+  );
 
   // Run license checker on npcheck-env directory
   const depLicenses = await checkerAsync({ start: envFolderPath });
@@ -81,7 +101,7 @@ const licenseTreePlugin = async (module, config) => {
     );
   }
 
-  fs.rmdirSync(envFolderPath, { recursive: true });
+  fs.rmSync(envFolderPath, { recursive: true });
   return results;
 };
 
