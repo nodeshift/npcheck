@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const chalk = require('chalk');
 
 const stringBuilder = (text) => ({
@@ -25,14 +27,17 @@ const printStatuses = (statuses) => {
   });
 };
 
-const printWarning = (message) => {
-  console.log(chalk.yellow(message));
+const createErrorLog = (output) => {
+  const now = new Date();
+  const filepath = path.join(process.cwd(), 'npcheck-errors.log');
+  const log = `----\n${now}\n----\n${output.trim()}\n`;
+  fs.appendFileSync(filepath, log);
 };
 
 module.exports = {
   stringBuilder,
   printStatuses,
-  printWarning,
+  createErrorLog,
   success,
   failure,
   warning
