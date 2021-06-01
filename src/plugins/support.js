@@ -1,57 +1,66 @@
-const { stringBuilder, success, warning } = require('../lib/format');
-const { passThroughError } = require('../lib/result');
-const { fetchGithub } = require('../lib/fetch');
+const fs = require('fs');
+const path = require('path');
+const chalk = require('chalk');
+const { execSync } = require('child_process');
+const semver = require('semver');
+const pkgSupport = require('@pkgjs/support');
 
-const supportPlugin = async (module, config, options) => {
+const { stringBuilder, warning, success } = require('../lib/format');
+const { buildInstallCommand } = require('../lib/npm');
+const { passThroughError } = require('../lib/result');
+
+const supportPlugin = async (pkg, config) => {
   // Support plugin output
   const output = stringBuilder('\nChecking for LTS support').withPadding(66);
 
-  // Check if module has a support field
-  const hasSupportField = module.support === true;
-  if (!hasSupportField) {
-    warning(output.get());
-    return passThroughError(`The module ${module.name} has no support field.`);
-  }
+  /* DOWNLOAD THE PACKAGE FROM NPM */
+  const envFolderPath = path.resolve(process.cwd(), 'npcheck-env');
+  fs.mkdirSync(envFolderPath);
 
-  // If support field exists fetch the `package-support.json`
-  const githubTarget = module.repository.url
-    .split('github.com/')[1]
-    .replace('.git', '');
+  console.log(chalk.gray('\nDownloading module dependencies...'));
+  const npmCommand = buildInstallCommand(pkg.name, envFolderPath);
 
-  let pkgSupport;
+  execSync(npmCommand, { encoding: 'utf-8', cwd: __dirname });
+  /* END */
 
-  try {
-    // Get package-support.json file info from github
-    const uri = `/repos/${githubTarget}/contents/package-support.json`;
-    const blob = await fetchGithub(uri, options.githubToken);
-
-    // Get the file contents from github
-    pkgSupport = await fetchGithub(
-      blob.download_url,
-      options.githubToken,
-      true
-    );
-  } catch (err) {
-    warning(output.get());
-    return passThroughError(
-      `The module ${module.name} has no package-support.json file.`
-    );
-  }
-
-  // Check for LTS node target
-  const targetingLTS = pkgSupport.versions?.find(
-    (item) => item?.target?.node === 'lts'
+  const pkgPath = path.resolve(
+    process.cwd(),
+    `npcheck-env/node_modules/${pkg.name}`
   );
 
-  if (!targetingLTS) {
-    warning(output.get());
-    return passThroughError(
-      `The module ${module.name} has no support for the LTS version of node.`
+  const support = await pkgSupport.getSupportData(pkg, pkgPath);
+
+  const supportData = Buffer.isBuffer(support.contents)
+    ? JSON.parse(support.contents.toString())
+    : support.contents;
+
+  if (supportData !== 'unknown') {
+    // Check for LTS node target
+    const targetsLTS = supportData.versions?.find(
+      (item) => item?.target?.node === 'lts'
     );
+    if (targetsLTS) {
+      success(output.get());
+      return null;
+    }
   }
 
-  success(output.get());
-  return null;
+  /* Couldn't detect LTS support from @pkg/support so let's try the engines field. */
+
+  const NODE_LTS = semver.coerce(config.lts);
+
+  const engines = pkg?.engines?.node || '0.0.0';
+
+  if (semver.satisfies(NODE_LTS, engines)) {
+    success(output.get());
+    return null;
+  }
+
+  // LTS support not found :(
+  warning(output.get());
+  return passThroughError(
+    `The module "${module.name}" appears to have no support for the LTS version (v${NODE_LTS}) of node.`
+  );
 };
 
 module.exports = supportPlugin;
