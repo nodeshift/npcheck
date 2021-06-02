@@ -1,27 +1,13 @@
-const fs = require('fs');
 const path = require('path');
-const chalk = require('chalk');
-const { execSync } = require('child_process');
 const semver = require('semver');
 const pkgSupport = require('@pkgjs/support');
 
 const { stringBuilder, warning, success } = require('../lib/format');
-const { buildInstallCommand } = require('../lib/npm');
 const { passThroughError } = require('../lib/result');
 
 const supportPlugin = async (pkg, config) => {
   // Support plugin output
   const output = stringBuilder('\nChecking for LTS support').withPadding(66);
-
-  /* DOWNLOAD THE PACKAGE FROM NPM */
-  const envFolderPath = path.resolve(process.cwd(), 'npcheck-env');
-  fs.mkdirSync(envFolderPath);
-
-  console.log(chalk.gray('\nDownloading module dependencies...'));
-  const npmCommand = buildInstallCommand(pkg.name, envFolderPath);
-
-  execSync(npmCommand, { encoding: 'utf-8', cwd: __dirname });
-  /* END */
 
   const pkgPath = path.resolve(
     process.cwd(),

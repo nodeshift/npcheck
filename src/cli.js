@@ -14,7 +14,9 @@ const maintenancePlugin = require('./plugins/maintenance');
 const supportPlugin = require('./plugins/support');
 
 const { getInfoFromNPM } = require('./lib/npm');
-const { merge } = require('./lib/result');
+const { merge, error } = require('./lib/result');
+const { createErrorLog } = require('./lib/format');
+const { createEnvDirectory, cleanEnvDirectory } = require('./lib/npcheck-env');
 
 const figletPromise = util.promisify(figlet);
 
@@ -39,7 +41,7 @@ module.exports = {
       process.exit(1);
     }
 
-    let result = [];
+    let results = [];
 
     const plugins = [
       deprecationPlugin,
@@ -51,26 +53,58 @@ module.exports = {
       supportPlugin
     ];
 
-    for await (const module of config.modules) {
-      const nameFormat = chalk.cyan.bold(module.name);
-      console.log(chalk.bold(`\nRunning checks on ${nameFormat}`));
+    for (const pkg of config.modules) {
+      // just some info output
+      const pkgNamePretty = chalk.cyan.bold(pkg.name);
+      console.log(chalk.bold(`\nRunning checks on ${pkgNamePretty}`));
 
-      const moduleInfo = getInfoFromNPM(module.name);
+      const pkgInfo = getInfoFromNPM(pkg.name);
 
-      for await (const plugin of plugins) {
-        const status = await plugin(moduleInfo, config, options);
-        result = merge(result, status);
+      // create the env directory for this package
+      console.log(chalk.gray('\nDownloading module dependencies...'));
+
+      try {
+        createEnvDirectory(pkg);
+        console.log(
+          chalk.magenta(
+            `\n${pkgInfo.name}@${pkgInfo.version} has been installed.`
+          )
+        );
+      } catch (err) {
+        // when a module can't be installed using NPM log the output to `npcheck-errors.log`
+        console.log(chalk.red.bold(`\nFailed to install ${pkgInfo.name}...`));
+        createErrorLog(err.message);
+
+        // update the results array
+        const logs = chalk.italic('npcheck-errors.log');
+        results = merge(
+          results,
+          error(
+            `Module "${pkgInfo.name}" couldn't be installed. Check ${logs} for more information.`
+          )
+        );
+
+        // continue to the next module on the list
+        continue;
       }
+
+      for (const plugin of plugins) {
+        const status = await plugin(pkgInfo, config, options);
+        results = merge(results, status);
+      }
+
+      // clean-up env directory from the current package
+      cleanEnvDirectory();
     }
 
     // check if the no-errors flag is set
-    result = options.noErrors
-      ? result.map(({ type, ...rest }) => ({ type: 'warning', ...rest }))
-      : result;
+    results = options.noErrors
+      ? results.map(({ type, ...rest }) => ({ type: 'warning', ...rest }))
+      : results;
 
     console.log(chalk.white.bold('\nNPCheck Report'));
 
-    result.forEach((log, index) => {
+    results.forEach((log, index) => {
       if (log.type === 'error') {
         console.log(chalk.red(`\n(${index + 1}): ${log.reason}`));
       } else {
@@ -78,12 +112,12 @@ module.exports = {
       }
     });
 
-    const errors = result.filter((log) => log.type === 'error');
-    const warnings = result.filter((log) => log.type === 'warning');
+    const errors = results.filter((log) => log.type === 'error');
+    const warnings = results.filter((log) => log.type === 'warning');
 
     console.log(
       chalk.red.bold(
-        `\nproblems: ${result.length} (errors: ${errors.length} - warnings: ${warnings.length})\n`
+        `\nproblems: ${results.length} (errors: ${errors.length} - warnings: ${warnings.length})\n`
       )
     );
 

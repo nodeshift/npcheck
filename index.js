@@ -3,7 +3,7 @@
 const yargs = require('yargs');
 const chalk = require('chalk');
 const cli = require('./src/cli');
-const clean = require('./src/lib/clean');
+const { cleanEnvDirectory } = require('./src/lib/npcheck-env');
 
 const options = yargs
   .parserConfiguration({
@@ -38,5 +38,5 @@ process.on('unhandledRejection', (err) => {
 });
 
 // clean-up hook before exiting the node.js process
-process.on('exit', clean);
-process.on('SIGINT', clean);
+process.on('exit', cleanEnvDirectory);
+process.on('SIGINT', cleanEnvDirectory);
