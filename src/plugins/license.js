@@ -2,16 +2,16 @@ const { stringBuilder, success, failure, warning } = require('../lib/format');
 const { error, passThroughError } = require('../lib/result');
 const { matchLicenses } = require('../lib/regex');
 
-const licensePlugin = async (module, config) => {
+const licensePlugin = async (pkg, config) => {
   // Licenses that we'll consider passing
   const licenses = config.licenses?.allow || [];
-  const licensesLocal = config.licenses?.rules[module.name]?.allow || [];
+  const licensesLocal = config.licenses?.rules[pkg.name]?.allow || [];
 
   // Licenses that will pass but with a warning
-  const licensesForcePass = config.licenses?.rules[module.name]?.override || [];
+  const licensesForcePass = config.licenses?.rules[pkg.name]?.override || [];
 
   const isPassing = [...licenses, ...licensesLocal].find((name) =>
-    matchLicenses(module.license, name)
+    matchLicenses(pkg.license, name)
   );
 
   const output = stringBuilder('\nChecking top-level license').withPadding(66);
@@ -22,19 +22,19 @@ const licensePlugin = async (module, config) => {
   }
 
   const isForcePassing = licensesForcePass.find((name) =>
-    matchLicenses(module.license, name)
+    matchLicenses(pkg.license, name)
   );
 
   if (isForcePassing) {
     warning(output.get());
     return passThroughError(
-      `The module "${module.name}" is under the the yet undetermined license "${module.license}". (Manual review needed)`
+      `The module "${pkg.name}" is under the the yet undetermined license "${pkg.license}". (Manual review needed)`
     );
   }
 
   failure(output.get());
   return error(
-    `The module "${module.name}" is under the non-acceptable license "${module.license}".`
+    `The module "${pkg.name}" is under the non-acceptable license "${pkg.license}".`
   );
 };
 

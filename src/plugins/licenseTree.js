@@ -9,14 +9,14 @@ const { stringBuilder, success, warning, failure } = require('../lib/format');
 
 const checkerAsync = util.promisify(checker.init);
 
-const licenseTreePlugin = async (module, config) => {
+const licenseTreePlugin = async (pkg, config) => {
   const envFolderPath = path.resolve(process.cwd(), 'npcheck-env');
   // Run license checker on npcheck-env directory
   const depLicenses = await checkerAsync({ start: envFolderPath });
 
   // Remove module from the list
   const dependencies = Object.entries(depLicenses).filter(
-    ([pkg]) => !pkg.includes(module.name)
+    ([pkgName]) => !pkgName.includes(pkg.name)
   );
 
   const results = [];
@@ -28,7 +28,7 @@ const licenseTreePlugin = async (module, config) => {
     ).withPadding(75);
 
     const licenses = config.licenses?.allow || [];
-    const licensesSpecific = config.licenses?.rules[module.name]?.allow || [];
+    const licensesSpecific = config.licenses?.rules[pkg.name]?.allow || [];
 
     const isPassing = [...licenses, ...licensesSpecific].find((name) =>
       matchLicenses(value.licenses, name)
@@ -40,8 +40,7 @@ const licenseTreePlugin = async (module, config) => {
     }
 
     // Creating license list for the specific module
-    const licenseOverrides =
-      config.licenses?.rules[module.name]?.override || [];
+    const licenseOverrides = config.licenses?.rules[pkg.name]?.override || [];
 
     const isForcePassing = licenseOverrides.find((name) =>
       matchLicenses(value.licenses, name)
@@ -51,7 +50,7 @@ const licenseTreePlugin = async (module, config) => {
       warning(output.get());
       results.push(
         passThroughError(
-          `The module "${module.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`
+          `The module "${pkg.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`
         )
       );
       continue;
@@ -61,7 +60,7 @@ const licenseTreePlugin = async (module, config) => {
     failure(output.get());
     results.push(
       error(
-        `The module "${module.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`
+        `The module "${pkg.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`
       )
     );
   }

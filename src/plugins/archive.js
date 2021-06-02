@@ -2,8 +2,8 @@ const { error } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
 const { fetchGithub } = require('../lib/fetch');
 
-const archivePlugin = async (module, _, options) => {
-  const githubTarget = module.repository.url
+const archivePlugin = async (pkg, _, options) => {
+  const githubTarget = pkg.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
 
@@ -16,7 +16,7 @@ const archivePlugin = async (module, _, options) => {
   if (repo.deprecated) {
     failure(output.get());
     return error(
-      `The repository of the "${module.name}" module seems to be archived. (https://www.github.com/${githubTarget})`
+      `The repository of the "${pkg.name}" module seems to be archived. (https://www.github.com/${githubTarget})`
     );
   }
 

@@ -45,7 +45,7 @@ const supportPlugin = async (pkg, config) => {
   // LTS support not found :(
   warning(output.get());
   return passThroughError(
-    `The module "${module.name}" appears to have no support for the LTS version (v${NODE_LTS}) of node.`
+    `The module "${pkg.name}" appears to have no support for the LTS version (v${NODE_LTS}) of node.`
   );
 };
 
