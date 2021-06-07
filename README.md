@@ -1,4 +1,4 @@
-# npcheck
+# NPCheck
 
 "Node Package Checker" - A tool to run various checks on npm modules
 
@@ -35,12 +35,15 @@ Npcheck requires a configuration file where custom behavior can be specified. Th
 
 - `licenses.rules[modules].override`: List of licenses that the cli will treat as warnings (future license decisions to be made) but won't break the CI. _(type: Array)_
 
+> The LTS version of node.js can be found here: https://nodejs.org/en/about/releases/
+
 ### Example
 
 A simple npcheck configuration file.
 
 ```json
 {
+  "lts": "14.x",
   "modules": [
     {
       "name": "express",
@@ -82,6 +85,6 @@ Options:
   --version             Show version number                            [boolean]
   --github-token        Custom GitHub token provided to the API for resources
                         (env variable GITHUB_TOKEN is also an option)
-                                                        [string] [default: null]
-  --no-errors     Treats every error as a warning     [boolean] [default: false]
+                                                            [string] [default: null]
+  --no-errors           Treats every error as a warning     [boolean] [default: false]
 ```

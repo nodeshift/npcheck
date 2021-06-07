@@ -1,6 +1,6 @@
 {
   "name": "npcheck",
-  "version": "0.1.11",
+  "version": "0.1.12",
   "description": "A tool to run various checks on npm modules",
   "keywords": [],
   "author": "Red Hat, Inc.",
@@ -29,6 +29,8 @@
     "coverage": "jest --coverage"
   },
   "dependencies": {
+    "@pkgjs/nv": "^0.1.0",
+    "@pkgjs/support": "^0.0.5",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
@@ -36,6 +38,7 @@
     "figlet": "^1.5.0",
     "license-checker": "^25.0.1",
     "ramda": "^0.27.1",
+    "semver": "^7.3.5",
     "yargs": "^16.2.0"
   },
   "devDependencies": {

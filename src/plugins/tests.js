@@ -8,15 +8,15 @@ const {
   warning
 } = require('../lib/format');
 
-const testsPlugin = async (module, _, options) => {
+const testsPlugin = async (pkg, _, options) => {
   // Find npm test script (if exists)
-  const npmScripts = module.scripts || [];
+  const npmScripts = pkg.scripts || [];
   const npmTestCommand = Object.keys(npmScripts).find((cmd) =>
     cmd.includes('test')
   );
 
   // Test directory
-  const githubTarget = module.repository.url
+  const githubTarget = pkg.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
 
@@ -64,7 +64,7 @@ const testsPlugin = async (module, _, options) => {
   warning(testOutput.get());
   printStatuses(statuses);
   return passThroughError(
-    `The "${module.name}" seems that is lacking appropriate testing (https://www.github.com/${githubTarget})`
+    `The "${pkg.name}" seems that is lacking appropriate testing (https://www.github.com/${githubTarget})`
   );
 };
 

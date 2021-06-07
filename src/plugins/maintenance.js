@@ -6,8 +6,8 @@ const { fetchGithub } = require('../lib/fetch');
 
 const SIX_MONTHS = 183; // in days
 
-const maintenancePlugin = async (module, _, options) => {
-  const githubTarget = module.repository.url
+const maintenancePlugin = async (pkg, _, options) => {
+  const githubTarget = pkg.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
 
@@ -23,7 +23,7 @@ const maintenancePlugin = async (module, _, options) => {
 
   if (!latestRelease) {
     warning(output.get());
-    return passThroughError(`No releases found for the ${module.name} module`);
+    return passThroughError(`No releases found for the ${pkg.name} module`);
   }
 
   const now = new Date();
@@ -34,7 +34,7 @@ const maintenancePlugin = async (module, _, options) => {
   if (difference > SIX_MONTHS) {
     warning(output.get());
     const distance = formatDistanceToNow(releaseDate);
-    const reason = `The latest release of "${module.name}" was ${distance} ago`;
+    const reason = `The latest release of "${pkg.name}" was ${distance} ago`;
     return passThroughError(reason);
   }
 
