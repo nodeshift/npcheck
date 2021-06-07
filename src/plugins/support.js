@@ -39,11 +39,7 @@ const supportPlugin = async (pkg) => {
 
   const unsupported = versions
     .map((v) => v.version)
-    .map((v) => ({
-      version: v,
-      support: semver.satisfies(v, engines)
-    }))
-    .filter((v) => !v.support);
+    .filter((v) => !semver.satisfies(v, engines));
 
   if (unsupported.length === 0) {
     success(output.get());
@@ -51,9 +47,10 @@ const supportPlugin = async (pkg) => {
   }
 
   // LTS support not found :(
+  const unsupportedVersions = unsupported.join(', ');
   warning(output.get());
   return passThroughError(
-    `The module "${pkg.name}" appears to have no support for the LTS version (v${unsupported[0].version}) of node.`
+    `The module "${pkg.name}" appears to have no support for the LTS version(s) ${unsupportedVersions} of Node.js.`
   );
 };
 
