@@ -1,11 +1,12 @@
 const path = require('path');
 const semver = require('semver');
 const pkgSupport = require('@pkgjs/support');
+const nv = require('@pkgjs/nv');
 
 const { stringBuilder, warning, success } = require('../lib/format');
 const { passThroughError } = require('../lib/result');
 
-const supportPlugin = async (pkg, config) => {
+const supportPlugin = async (pkg) => {
   // Support plugin output
   const output = stringBuilder('\nChecking for LTS support').withPadding(66);
 
@@ -33,11 +34,18 @@ const supportPlugin = async (pkg, config) => {
 
   /* Couldn't detect LTS support from @pkg/support so let's try the engines field. */
 
-  const NODE_LTS = semver.coerce(config.lts);
-
+  const versions = await nv('lts');
   const engines = pkg?.engines?.node || '0.0.0';
 
-  if (semver.satisfies(NODE_LTS, engines)) {
+  const unsupported = versions
+    .map((v) => v.version)
+    .map((v) => ({
+      version: v,
+      support: semver.satisfies(v, engines)
+    }))
+    .filter((v) => !v.support);
+
+  if (unsupported.length === 0) {
     success(output.get());
     return null;
   }
@@ -45,7 +53,7 @@ const supportPlugin = async (pkg, config) => {
   // LTS support not found :(
   warning(output.get());
   return passThroughError(
-    `The module "${pkg.name}" appears to have no support for the LTS version (v${NODE_LTS}) of node.`
+    `The module "${pkg.name}" appears to have no support for the LTS version (v${unsupported[0].version}) of node.`
   );
 };
 

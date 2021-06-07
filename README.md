@@ -19,8 +19,6 @@ Npcheck requires a configuration file where custom behavior can be specified. Th
 
 ### Options
 
-- `lts`: The current LTS version of node.js. _(type: String)_
-
 - `modules`: The list of specified modules that npcheck will run checks on. _(type: Array)_
 
 - `[module].name`: The name of the npm module. _(type: String)_

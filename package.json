@@ -29,6 +29,7 @@
     "coverage": "jest --coverage"
   },
   "dependencies": {
+    "@pkgjs/nv": "^0.1.0",
     "@pkgjs/support": "^0.0.5",
     "axios": "^0.21.1",
     "chalk": "^4.1.0",
