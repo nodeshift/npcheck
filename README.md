@@ -35,15 +35,12 @@ Npcheck requires a configuration file where custom behavior can be specified. Th
 
 - `licenses.rules[modules].override`: List of licenses that the cli will treat as warnings (future license decisions to be made) but won't break the CI. _(type: Array)_
 
-> The LTS version of node.js can be found here: https://nodejs.org/en/about/releases/
-
 ### Example
 
 A simple npcheck configuration file.
 
 ```json
 {
-  "lts": "14.x",
   "modules": [
     {
       "name": "express",
