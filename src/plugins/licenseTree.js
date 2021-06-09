@@ -3,7 +3,7 @@ const util = require('util');
 const chalk = require('chalk');
 const checker = require('license-checker');
 
-const { error, passThroughError } = require('../lib/result');
+const { createError, createWarning } = require('../lib/result');
 const { matchLicenses } = require('../lib/regex');
 const { stringBuilder, success, warning, failure } = require('../lib/format');
 
@@ -49,7 +49,7 @@ const licenseTreePlugin = async (pkg, config) => {
     if (isForcePassing) {
       warning(output.get());
       results.push(
-        passThroughError(
+        createWarning(
           `The module "${pkg.name}" depends on the "${key}" package which is under the yet undetermined license "${value.licenses}". (Manual review needed)`
         )
       );
@@ -59,7 +59,7 @@ const licenseTreePlugin = async (pkg, config) => {
     // Nothing is accepted treat license as an error
     failure(output.get());
     results.push(
-      error(
+      createError(
         `The module "${pkg.name}" depends on the "${key}" package which is under the non-acceptable license "${value.licenses}".`
       )
     );

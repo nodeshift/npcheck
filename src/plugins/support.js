@@ -4,7 +4,7 @@ const pkgSupport = require('@pkgjs/support');
 const nv = require('@pkgjs/nv');
 
 const { stringBuilder, warning, success } = require('../lib/format');
-const { passThroughError } = require('../lib/result');
+const { createWarning } = require('../lib/result');
 
 const supportPlugin = async (pkg) => {
   // Support plugin output
@@ -49,7 +49,7 @@ const supportPlugin = async (pkg) => {
   // LTS support not found :(
   const unsupportedVersions = unsupported.join(', ');
   warning(output.get());
-  return passThroughError(
+  return createWarning(
     `The module "${pkg.name}" appears to have no support for the LTS version(s) ${unsupportedVersions} of Node.js.`
   );
 };
