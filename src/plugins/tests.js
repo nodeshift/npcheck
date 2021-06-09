@@ -1,5 +1,5 @@
 const R = require('ramda');
-const { passThroughError } = require('../lib/result');
+const { createWarning } = require('../lib/result');
 const { fetchGithub } = require('../lib/fetch');
 const {
   stringBuilder,
@@ -63,7 +63,7 @@ const testsPlugin = async (pkg, _, options) => {
 
   warning(testOutput.get());
   printStatuses(statuses);
-  return passThroughError(
+  return createWarning(
     `The "${pkg.name}" seems that is lacking appropriate testing (https://www.github.com/${githubTarget})`
   );
 };

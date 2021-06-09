@@ -1,4 +1,4 @@
-const { error } = require('../lib/result');
+const { createError } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
 const { fetchGithub } = require('../lib/fetch');
 
@@ -15,7 +15,7 @@ const archivePlugin = async (pkg, _, options) => {
 
   if (repo.deprecated) {
     failure(output.get());
-    return error(
+    return createError(
       `The repository of the "${pkg.name}" module seems to be archived. (https://www.github.com/${githubTarget})`
     );
   }

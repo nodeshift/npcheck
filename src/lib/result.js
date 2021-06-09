@@ -1,9 +1,9 @@
 module.exports = {
-  error: (reason) => ({
+  createError: (reason) => ({
     type: 'error',
     reason
   }),
-  passThroughError: (reason) => ({
+  createWarning: (reason) => ({
     type: 'warning',
     reason
   }),

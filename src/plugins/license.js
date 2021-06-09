@@ -1,5 +1,5 @@
 const { stringBuilder, success, failure, warning } = require('../lib/format');
-const { error, passThroughError } = require('../lib/result');
+const { createError, createWarning } = require('../lib/result');
 const { matchLicenses } = require('../lib/regex');
 
 const licensePlugin = async (pkg, config) => {
@@ -27,13 +27,13 @@ const licensePlugin = async (pkg, config) => {
 
   if (isForcePassing) {
     warning(output.get());
-    return passThroughError(
+    return createWarning(
       `The module "${pkg.name}" is under the the yet undetermined license "${pkg.license}". (Manual review needed)`
     );
   }
 
   failure(output.get());
-  return error(
+  return createError(
     `The module "${pkg.name}" is under the non-acceptable license "${pkg.license}".`
   );
 };

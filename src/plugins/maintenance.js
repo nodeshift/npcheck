@@ -1,6 +1,6 @@
 const R = require('ramda');
 const { differenceInDays, formatDistanceToNow } = require('date-fns');
-const { passThroughError } = require('../lib/result');
+const { createWarning } = require('../lib/result');
 const { stringBuilder, success, warning } = require('../lib/format');
 const { fetchGithub } = require('../lib/fetch');
 
@@ -23,7 +23,7 @@ const maintenancePlugin = async (pkg, _, options) => {
 
   if (!latestRelease) {
     warning(output.get());
-    return passThroughError(`No releases found for the ${pkg.name} module`);
+    return createWarning(`No releases found for the ${pkg.name} module`);
   }
 
   const now = new Date();
@@ -35,7 +35,7 @@ const maintenancePlugin = async (pkg, _, options) => {
     warning(output.get());
     const distance = formatDistanceToNow(releaseDate);
     const reason = `The latest release of "${pkg.name}" was ${distance} ago`;
-    return passThroughError(reason);
+    return createWarning(reason);
   }
 
   success(output.get());

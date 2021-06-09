@@ -1,4 +1,4 @@
-const { error } = require('../lib/result');
+const { createError } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
 
 const deprecationPlugin = async (pkg) => {
@@ -10,7 +10,7 @@ const deprecationPlugin = async (pkg) => {
 
   if (isDeprecated) {
     failure(output.get());
-    return error(
+    return createError(
       `Package '${pkg.name}' seems to be deprecated on NPM. (https://npmjs.com/package/${pkg.name})`
     );
   }
