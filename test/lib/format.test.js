@@ -1,9 +1,16 @@
 /* eslint-env jest */
 
+const fs = require('fs');
 const format = require('../../src/lib/format');
 
+jest.mock('fs');
+
+afterEach(() => {
+  jest.clearAllMocks();
+});
+
 it('should pad the provided string at the end.', () => {
-  const response = format.stringBuilder('Hello, World!').withPadding(2);
+  const response = format.stringBuilder('Hello, World!').withPadding(15);
   const expected = 'Hello, World!  ';
 
   expect(response.get()).toEqual(expected);
@@ -46,4 +53,12 @@ it('should append the output with the string "FAIL".', () => {
   format.failure(output);
 
   expect(state).toBe(expected);
+});
+
+it('should append the error log to the logs file.', () => {
+  // mock implementation for fs.appendFileSync
+  fs.appendFileSync.mockImplementation(() => {});
+  format.createErrorLog('just a random error message.');
+
+  expect(fs.appendFileSync).toHaveBeenCalled();
 });
