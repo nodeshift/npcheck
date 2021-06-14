@@ -14,7 +14,7 @@ const maintenancePlugin = require('./plugins/maintenance');
 const supportPlugin = require('./plugins/support');
 
 const { getInfoFromNPM } = require('./lib/npm');
-const { merge, error } = require('./lib/result');
+const { merge, createError } = require('./lib/result');
 const { createErrorLog } = require('./lib/format');
 const { createEnvDirectory, cleanEnvDirectory } = require('./lib/npcheck-env');
 
@@ -79,7 +79,7 @@ module.exports = {
         const logs = chalk.italic('npcheck-errors.log');
         results = merge(
           results,
-          error(
+          createError(
             `Module "${pkgInfo.name}" couldn't be installed. Check ${logs} for more information.`
           )
         );
