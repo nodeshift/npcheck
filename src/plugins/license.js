@@ -28,7 +28,7 @@ const licensePlugin = async (pkg, config) => {
   if (isForcePassing) {
     warning(output.get());
     return createWarning(
-      `The module "${pkg.name}" is under the the yet undetermined license "${pkg.license}". (Manual review needed)`
+      `The module "${pkg.name}" is under the yet undetermined license "${pkg.license}". (Manual review needed)`
     );
   }
 
