@@ -14,16 +14,10 @@ afterEach(() => {
 });
 
 it('should return null if module is not deprecated', async () => {
-  const pkg = { deprecated: false };
+  const pkg = {};
   const result = await deprecationPlugin(pkg);
 
   expect(result).toBe(null);
-});
-
-it('should log success message if module is not deprecated', async () => {
-  const pkg = { deprecated: false };
-  await deprecationPlugin(pkg);
-
   expect(format.success).toHaveBeenCalled();
 });
 
@@ -32,11 +26,13 @@ it('should return error result if module is deprecated', async () => {
   const result = await deprecationPlugin(pkg);
 
   expect(result.type).toBe('error');
+  expect(format.failure).toHaveBeenCalled();
 });
 
-it('should log failure message if module is deprecated', async () => {
-  const pkg = { deprecated: 'this version has been deprecated' };
-  await deprecationPlugin(pkg);
+it('should return error result if module is deprecated with custom message', async () => {
+  const pkg = { deprecated: 'replaced by a different NPM package' };
+  const result = await deprecationPlugin(pkg);
 
+  expect(result.type).toBe('error');
   expect(format.failure).toHaveBeenCalled();
 });

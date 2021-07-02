@@ -6,12 +6,17 @@ const deprecationPlugin = async (pkg) => {
     "\nChecking if it's deprecated on NPM"
   ).withPadding(66);
 
-  const isDeprecated = pkg.deprecated === 'this version has been deprecated';
+  /*
+    I do thing just the existence of the (pkg.deprecated) field
+    should be enough, but just to be 100% sure the (pkg.deprecated !== '')
+    check also has been added.
+  */
+  const isDeprecated = pkg.deprecated && pkg.deprecated !== '';
 
   if (isDeprecated) {
     failure(output.get());
     return createError(
-      `Package '${pkg.name}' seems to be deprecated on NPM. (https://npmjs.com/package/${pkg.name})`
+      `Package '${pkg.name}' seems to be deprecated on NPM with message "${pkg.deprecated}". (https://npmjs.com/package/${pkg.name})`
     );
   }
 
