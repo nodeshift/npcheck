@@ -27,7 +27,7 @@ const supportPlugin = async (pkg) => {
     // Check for LTS node target
     const targetsLTS = supportData.versions
       .map((version) => version?.target?.node)
-      .some((target) => targets.indexOf(target) >= 0);
+      .some((target) => targets.includes(target));
 
     if (targetsLTS) {
       success(output.get());
