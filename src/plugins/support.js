@@ -21,11 +21,14 @@ const supportPlugin = async (pkg) => {
     ? JSON.parse(support.contents.toString())
     : support.contents;
 
+  const targets = ['all', 'lts', 'active', 'lts_active', 'supported'];
+
   if (supportData !== 'unknown') {
     // Check for LTS node target
-    const targetsLTS = supportData.versions?.find(
-      (item) => item?.target?.node === 'lts'
-    );
+    const targetsLTS = supportData.versions
+      .map((version) => version?.target?.node)
+      .some((target) => targets.indexOf(target) >= 0);
+
     if (targetsLTS) {
       success(output.get());
       return null;
