@@ -26,7 +26,8 @@
     "pretest": "eslint --ignore-path .gitignore",
     "lint:fix": "eslint . --fix",
     "test": "jest --no-colors",
-    "coverage": "jest --coverage"
+    "coverage": "jest --coverage",
+    "release": "standard-version"
   },
   "dependencies": {
     "@pkgjs/nv": "^0.1.0",
@@ -52,6 +53,7 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^5.0.0",
     "husky": "^6.0.0",
-    "jest": "^26.6.3"
+    "jest": "^26.6.3",
+    "standard-version": "^9.3.0"
   }
 }
