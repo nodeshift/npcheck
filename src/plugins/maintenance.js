@@ -2,24 +2,20 @@ const R = require('ramda');
 const { differenceInDays, formatDistanceToNow } = require('date-fns');
 const { createWarning } = require('../lib/result');
 const { stringBuilder, success, warning } = require('../lib/format');
-const { fetchGithub } = require('../lib/fetch');
 
 const SIX_MONTHS = 183; // in days
 
 const maintenancePlugin = async (pkg, _, options) => {
-  const githubTarget = pkg.repository.url
-    .split('github.com/')[1]
-    .replace('.git', '');
+  // getting package release list from NPM `time` field,
+  // more info (https://docs.npmjs.com/cli/v7/commands/npm-view)
+  const releases = pkg.time || [];
+  const releasesTags = Object.keys(releases);
 
   const output = stringBuilder('\nChecking maintenance metrics').withPadding(
     66
   );
 
-  const releases = await fetchGithub(
-    `/repos/${githubTarget}/releases`,
-    options.githubToken
-  );
-  const latestRelease = R.head(releases);
+  const latestRelease = R.last(releasesTags);
 
   if (!latestRelease) {
     warning(output.get());
@@ -27,7 +23,7 @@ const maintenancePlugin = async (pkg, _, options) => {
   }
 
   const now = new Date();
-  const releaseDate = new Date(latestRelease?.published_at);
+  const releaseDate = new Date(releases[latestRelease]);
 
   const difference = differenceInDays(now, releaseDate);
 
