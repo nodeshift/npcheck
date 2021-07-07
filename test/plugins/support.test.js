@@ -23,7 +23,71 @@ it('should return null if the package supports LTS through @pkgjs/support', asyn
   // mocking the @pkgjs/support dependency
   pkgSupport.getSupportData.mockImplementation(() => {
     return {
+      contents: Buffer.from('{"versions":[{"target":{"node":"all"}}]}')
+    };
+  });
+
+  const pkg = { name: 'test' };
+
+  const result = await supportPlugin(pkg);
+
+  expect(result).toBe(null);
+  expect(success).toHaveBeenCalled();
+});
+
+it('should return null if the package supports the "lts" target', async () => {
+  // mocking the @pkgjs/support dependency
+  pkgSupport.getSupportData.mockImplementation(() => {
+    return {
       contents: Buffer.from('{"versions":[{"target":{"node":"lts"}}]}')
+    };
+  });
+
+  const pkg = { name: 'test' };
+
+  const result = await supportPlugin(pkg);
+
+  expect(result).toBe(null);
+  expect(success).toHaveBeenCalled();
+});
+
+it('should return null if the package supports the "lts_active" target', async () => {
+  // mocking the @pkgjs/support dependency
+  pkgSupport.getSupportData.mockImplementation(() => {
+    return {
+      contents: Buffer.from('{"versions":[{"target":{"node":"lts_active"}}]}')
+    };
+  });
+
+  const pkg = { name: 'test' };
+
+  const result = await supportPlugin(pkg);
+
+  expect(result).toBe(null);
+  expect(success).toHaveBeenCalled();
+});
+
+it('should return null if the package supports the "active" target', async () => {
+  // mocking the @pkgjs/support dependency
+  pkgSupport.getSupportData.mockImplementation(() => {
+    return {
+      contents: Buffer.from('{"versions":[{"target":{"node":"active"}}]}')
+    };
+  });
+
+  const pkg = { name: 'test' };
+
+  const result = await supportPlugin(pkg);
+
+  expect(result).toBe(null);
+  expect(success).toHaveBeenCalled();
+});
+
+it('should return null if the package supports the "supported" target', async () => {
+  // mocking the @pkgjs/support dependency
+  pkgSupport.getSupportData.mockImplementation(() => {
+    return {
+      contents: Buffer.from('{"versions":[{"target":{"node":"supported"}}]}')
     };
   });
 
