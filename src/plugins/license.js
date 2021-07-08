@@ -10,8 +10,13 @@ const licensePlugin = async (pkg, config) => {
   // Licenses that will pass but with a warning
   const licensesForcePass = config.licenses?.rules[pkg.name]?.override || [];
 
+  // We need to check if the the license is defined as a string or an array
+  const license = Array.isArray(pkg.licenses)
+    ? pkg.licenses.map((v) => v.type).join(',')
+    : pkg.license;
+
   const isPassing = [...licenses, ...licensesLocal].find((name) =>
-    matchLicenses(pkg.license, name)
+    matchLicenses(license, name)
   );
 
   const output = stringBuilder('\nChecking top-level license').withPadding(66);
@@ -22,19 +27,19 @@ const licensePlugin = async (pkg, config) => {
   }
 
   const isForcePassing = licensesForcePass.find((name) =>
-    matchLicenses(pkg.license, name)
+    matchLicenses(license, name)
   );
 
   if (isForcePassing) {
     warning(output.get());
     return createWarning(
-      `The module "${pkg.name}" is under the yet undetermined license "${pkg.license}". (Manual review needed)`
+      `The module "${pkg.name}" is under the yet undetermined license(s) "${license}". (Manual review needed)`
     );
   }
 
   failure(output.get());
   return createError(
-    `The module "${pkg.name}" is under the non-acceptable license "${pkg.license}".`
+    `The module "${pkg.name}" is under the non-acceptable license(s) "${license}".`
   );
 };
 
