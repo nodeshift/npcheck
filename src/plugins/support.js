@@ -53,7 +53,9 @@ const supportPlugin = async (pkg) => {
   const unsupportedVersions = unsupported.join(', ');
   warning(output.get());
   return createWarning(
-    `The module "${pkg.name}" appears to have no support for the LTS version(s) ${unsupportedVersions} of Node.js.`
+    supportData === 'unknown' && engines === '0.0.0'
+      ? `The module "${pkg.name}" does not specify the engines field or package-support.json so we cannot determine if it supports the LTS versions of Node.js.`
+      : `The module "${pkg.name}" has no support for the LTS version(s) ${unsupportedVersions} of Node.js.`
   );
 };
 
