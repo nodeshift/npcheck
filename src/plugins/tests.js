@@ -1,6 +1,6 @@
 const R = require('ramda');
 const { createWarning } = require('../lib/result');
-const { fetchGithub } = require('../lib/fetch');
+const { fetchGithub } = require('../lib/network');
 const {
   stringBuilder,
   printStatuses,

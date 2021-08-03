@@ -12,6 +12,7 @@ const licenseTreePlugin = require('./plugins/licenseTree');
 const testsPlugin = require('./plugins/tests');
 const maintenancePlugin = require('./plugins/maintenance');
 const supportPlugin = require('./plugins/support');
+const typingsPlugin = require('./plugins/typings');
 
 const { getInfoFromNPM } = require('./lib/npm');
 const { merge, createError } = require('./lib/result');
@@ -50,7 +51,8 @@ module.exports = {
       licenseTreePlugin,
       testsPlugin,
       maintenancePlugin,
-      supportPlugin
+      supportPlugin,
+      typingsPlugin
     ];
 
     for (const pkg of config.modules) {
