@@ -1,7 +1,7 @@
 /* eslint-env jest */
 
 const axios = require('axios');
-const network = require('../../src/lib/fetch');
+const network = require('../../src/lib/network');
 
 jest.mock('axios');
 

@@ -3,6 +3,11 @@ const axios = require('axios');
 const cache = new Map();
 const clearCache = () => cache.clear();
 
+const fetch = async (url) => {
+  const response = await axios.get(url);
+  return response.data;
+};
+
 const fetchGithub = async (target, token, override = false) => {
   // check if we already have the response in cache
   if (cache.has(target)) return cache.get(target);
@@ -20,4 +25,4 @@ const fetchGithub = async (target, token, override = false) => {
   return response.data;
 };
 
-module.exports = { fetchGithub, cache, clearCache };
+module.exports = { fetch, fetchGithub, cache, clearCache };

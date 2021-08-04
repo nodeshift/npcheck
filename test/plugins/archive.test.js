@@ -1,10 +1,10 @@
 /* eslint-env jest */
 
-const network = require('../../src/lib/fetch');
+const network = require('../../src/lib/network');
 const format = require('../../src/lib/format');
 const archivePlugin = require('../../src/plugins/archive');
 
-jest.mock('../../src/lib/fetch');
+jest.mock('../../src/lib/network');
 jest.mock('../../src/lib/format', () => ({
   ...jest.requireActual('../../src/lib/format'),
   failure: jest.fn(),

@@ -1,6 +1,6 @@
 const { createError } = require('../lib/result');
 const { stringBuilder, success, failure } = require('../lib/format');
-const { fetchGithub } = require('../lib/fetch');
+const { fetchGithub } = require('../lib/network');
 
 const archivePlugin = async (pkg, _, options) => {
   const githubTarget = pkg.repository.url
