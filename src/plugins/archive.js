@@ -1,8 +1,13 @@
-const { createError } = require('../lib/result');
-const { stringBuilder, success, failure } = require('../lib/format');
+const { createError, createWarning } = require('../lib/result');
+const { stringBuilder, success, failure, warning } = require('../lib/format');
 const { fetchGithub } = require('../lib/fetch');
 
 const archivePlugin = async (pkg, _, options) => {
+  if (!pkg.repository.url) {
+    warning(output.get());
+    return createWarning(`No Github url found for the ${pkg.name} module`);
+  }
+  
   const githubTarget = pkg.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
