@@ -8,7 +8,7 @@ const archivePlugin = async (pkg, _, options) => {
     'Checking if github repository is archived'
   ).withPadding(65);
 
-  if (!pkg.repository.url) {
+  if (!pkg?.repository?.url) {
     warning(output.get());
     return createWarning(`The module "${pkg.name}" does not specify its GitHub repository.`);
   }
