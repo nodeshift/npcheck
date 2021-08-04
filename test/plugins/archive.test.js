@@ -97,19 +97,22 @@ it('should log failure message when module is archived', async () => {
   expect(format.failure).toHaveBeenCalled();
 });
 
-it('should log warning message when module does not specify its GitHub repository', async () => {
-  // mocking http request to GitHub
-  network.fetchGithub.mockImplementation(() => {
-    return Promise.resolve({
-      deprecated: true
-    });
-  });
+it('should log warning message when module does not specify its GitHub repository url', async () => {
 
   const pkg = {
     repository: {
     }
   };
 
+  const result = await archivePlugin(pkg, null, {});
+
+  expect(result.type).toBe('warning');
+  expect(format.warning).toHaveBeenCalled();
+});
+
+it('should log warning message when module does not specify its GitHub repository', async () => {
+
+  const pkg = {};
   const result = await archivePlugin(pkg, null, {});
 
   expect(result.type).toBe('warning');
