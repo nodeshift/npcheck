@@ -8,7 +8,8 @@ jest.mock('../../src/lib/network');
 jest.mock('../../src/lib/format', () => ({
   ...jest.requireActual('../../src/lib/format'),
   failure: jest.fn(),
-  success: jest.fn()
+  success: jest.fn(),
+  warning: jest.fn()
 }));
 
 afterEach(() => {
@@ -94,4 +95,23 @@ it('should log failure message when module is archived', async () => {
   await archivePlugin(pkg, null, {});
 
   expect(format.failure).toHaveBeenCalled();
+});
+
+it('should log warning message when module does not specify its GitHub repository', async () => {
+  // mocking http request to GitHub
+  network.fetchGithub.mockImplementation(() => {
+    return Promise.resolve({
+      deprecated: true
+    });
+  });
+
+  const pkg = {
+    repository: {
+    }
+  };
+
+  const result = await archivePlugin(pkg, null, {});
+
+  expect(result.type).toBe('warning');
+  expect(format.warning).toHaveBeenCalled();
 });
