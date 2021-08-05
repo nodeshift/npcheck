@@ -1,17 +1,23 @@
-const { createError } = require('../lib/result');
-const { stringBuilder, success, failure } = require('../lib/format');
+const { createError, createWarning } = require('../lib/result');
+const { stringBuilder, success, failure, warning } = require('../lib/format');
 const { fetchGithub } = require('../lib/network');
 
 const archivePlugin = async (pkg, _, options) => {
+
+  const output = stringBuilder(
+    'Checking if github repository is archived'
+  ).withPadding(65);
+
+  if (!pkg?.repository?.url) {
+    warning(output.get());
+    return createWarning(`The module "${pkg.name}" does not specify its GitHub repository.`);
+  }
+  
   const githubTarget = pkg.repository.url
     .split('github.com/')[1]
     .replace('.git', '');
 
   const repo = await fetchGithub(`/repos/${githubTarget}`, options.githubToken);
-
-  const output = stringBuilder(
-    'Checking if github repository is archived'
-  ).withPadding(65);
 
   if (repo.deprecated) {
     failure(output.get());
