@@ -86,6 +86,9 @@ module.exports = {
           )
         );
 
+        // clean-up env directory from the current package
+        cleanEnvDirectory();
+
         // continue to the next module on the list
         continue;
       }
