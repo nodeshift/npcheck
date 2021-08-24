@@ -9,7 +9,7 @@ const unmangle = (name) => {
   return name.replace('__', '/').replace('@', '');
 };
 
-const typingsPlugin = async (pkg) => {
+const typingsPlugin = async (pkg, _, options) => {
   // Typings plugin output
   const output = stringBuilder('\nChecking for TypeScript typings').withPadding(
     66
@@ -26,7 +26,7 @@ const typingsPlugin = async (pkg) => {
     'https://typespublisher.blob.core.windows.net/typespublisher/data/search-index-min.json';
 
   // We don't want to pull Microsoft's list for every module
-  if (cache === null) {
+  if (cache === null || options.ignore_cache) {
     const response = await fetch(TYPES_URI);
     cache = response;
   }
@@ -46,3 +46,5 @@ const typingsPlugin = async (pkg) => {
 };
 
 module.exports = typingsPlugin;
+
+module.exports.unmangle = unmangle; // exporting unmangle util function for testing purposes

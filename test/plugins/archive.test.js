@@ -98,10 +98,8 @@ it('should log failure message when module is archived', async () => {
 });
 
 it('should log warning message when module does not specify its GitHub repository url', async () => {
-
   const pkg = {
-    repository: {
-    }
+    repository: {}
   };
 
   const result = await archivePlugin(pkg, null, {});
@@ -111,7 +109,6 @@ it('should log warning message when module does not specify its GitHub repositor
 });
 
 it('should log warning message when module does not specify its GitHub repository', async () => {
-
   const pkg = {};
   const result = await archivePlugin(pkg, null, {});
 
