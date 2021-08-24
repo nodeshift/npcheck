@@ -16,7 +16,7 @@ afterEach(() => {
   jest.clearAllMocks();
 });
 
-it('should return null if the package specifies typings info on package.json', async () => {
+it('should return null if the package specifies types info on package.json', async () => {
   const pkg = { name: 'test', types: 'types/index.d.ts' };
   const result = await typingsPlugin(pkg);
 
