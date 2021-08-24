@@ -76,8 +76,9 @@ it('should use the cache on requests with the same target', async () => {
     };
   });
 
-  await network.fetchGithub('https://sample.com/test/test');
-  await network.fetchGithub('https://sample.com/test/test');
+  const content1 = await network.fetchGithub('https://sample.com/test/test');
+  const content2 = await network.fetchGithub('https://sample.com/test/test');
 
   expect(axios.get).toHaveBeenCalledTimes(1);
+  expect(content2).toBe(content1);
 });

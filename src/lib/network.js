@@ -10,7 +10,7 @@ const fetch = async (url) => {
 
 const fetchGithub = async (target, token, override = false) => {
   // check if we already have the response in cache
-  if (cache.has(target)) return cache.get(target);
+  if (cache.has(target)) return cache.get(target).data;
 
   const github = 'https://api.github.com';
   const url = override ? target : `${github}${target}`;
