@@ -2,8 +2,6 @@ const { fetch } = require('../lib/network');
 const { stringBuilder, warning, success } = require('../lib/format');
 const { createWarning } = require('../lib/result');
 
-let cache = null;
-
 // helper function when parsing @types/<package> list
 const unmangle = (name) => {
   return name.replace('__', '/').replace('@', '');
@@ -25,13 +23,8 @@ const typingsPlugin = async (pkg) => {
   const TYPES_URI =
     'https://typespublisher.blob.core.windows.net/typespublisher/data/search-index-min.json';
 
-  // We don't want to pull Microsoft's list for every module
-  if (cache === null) {
-    const response = await fetch(TYPES_URI);
-    cache = response;
-  }
-
-  const hasTypesPackage = cache.find((item) => unmangle(item.t) === pkg.name);
+  const data = await fetch(TYPES_URI);
+  const hasTypesPackage = data.find((item) => unmangle(item.t) === pkg.name);
 
   if (hasTypesPackage) {
     success(output.get());
@@ -46,3 +39,5 @@ const typingsPlugin = async (pkg) => {
 };
 
 module.exports = typingsPlugin;
+
+module.exports.unmangle = unmangle; // exporting unmangle util function for testing purposes
