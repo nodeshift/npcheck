@@ -4,7 +4,13 @@ const cache = new Map();
 const clearCache = () => cache.clear();
 
 const fetch = async (url) => {
+  // check if we already have the response in cache
+  if (cache.has(url)) return cache.get(url).data;
+
   const response = await axios.get(url);
+
+  // save response in cache for future usage
+  cache.set(url, response);
   return response.data;
 };
 

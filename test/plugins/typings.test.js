@@ -4,7 +4,11 @@ const network = require('../../src/lib/network');
 const typingsPlugin = require('../../src/plugins/typings');
 const { success, warning } = require('../../src/lib/format');
 
-jest.mock('../../src/lib/network');
+jest.mock('../../src/lib/network', () => ({
+  ...jest.requireActual('../../src/lib/network'),
+  fetch: jest.fn()
+}));
+
 jest.mock('../../src/lib/format', () => ({
   ...jest.requireActual('../../src/lib/format'),
   failure: jest.fn(),
@@ -33,6 +37,8 @@ it('should return null if the package specifies typings info on package.json', a
 });
 
 it('should return null if the package has typescript typings through definitely-typed', async () => {
+  // clear network cache before test
+  network.clearCache();
   // mocking http request to GitHub
   network.fetch.mockImplementation(() => {
     return Promise.resolve([
@@ -48,13 +54,15 @@ it('should return null if the package has typescript typings through definitely-
   });
 
   const pkg = { name: 'npcheck' };
-  const result = await typingsPlugin(pkg, {}, { ignore_cache: true });
+  const result = await typingsPlugin(pkg);
 
   expect(result).toBe(null);
   expect(success).toHaveBeenCalled();
 });
 
 it('should return null if the package has typescript typings through definitely-typed', async () => {
+  // clear network cache before test
+  network.clearCache();
   // mocking http request to GitHub
   network.fetch.mockImplementation(() => {
     return Promise.resolve([
@@ -70,20 +78,22 @@ it('should return null if the package has typescript typings through definitely-
   });
 
   const pkg = { name: 'nodeshift/npcheck' };
-  const result = await typingsPlugin(pkg, {}, { ignore_cache: true });
+  const result = await typingsPlugin(pkg);
 
   expect(result).toBe(null);
   expect(success).toHaveBeenCalled();
 });
 
 it('should return a warning when the module has no typescript typings', async () => {
+  // clear network cache before test
+  network.clearCache();
   // mocking http request to GitHub
   network.fetch.mockImplementation(() => {
     return Promise.resolve([]);
   });
 
   const pkg = { name: 'nodeshift/npcheck' };
-  const result = await typingsPlugin(pkg, {}, { ignore_cache: true });
+  const result = await typingsPlugin(pkg);
 
   expect(result.type).toBe('warning');
   expect(warning).toHaveBeenCalled();
