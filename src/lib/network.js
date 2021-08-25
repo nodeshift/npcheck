@@ -15,11 +15,11 @@ const fetch = async (url) => {
 };
 
 const fetchGithub = async (target, token, override = false) => {
-  // check if we already have the response in cache
-  if (cache.has(target)) return cache.get(target).data;
-
   const github = 'https://api.github.com';
   const url = override ? target : `${github}${target}`;
+  // check if we already have the response in cache
+  if (cache.has(url)) return cache.get(url).data;
+
   const options = {
     headers: {
       Authorization: token ? `token ${token}` : ''
@@ -27,7 +27,7 @@ const fetchGithub = async (target, token, override = false) => {
   };
   const response = await axios.get(url, options);
   // save response in cache for future usage
-  cache.set(target, response);
+  cache.set(url, response);
   return response.data;
 };
 
