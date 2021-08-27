@@ -7,6 +7,7 @@ const chalk = require('chalk');
 
 const deprecationPlugin = require('./plugins/deprecation');
 const archivePlugin = require('./plugins/archive');
+const citgmPlugin = require('./plugins/citgm');
 const licensePlugin = require('./plugins/license');
 const licenseTreePlugin = require('./plugins/licenseTree');
 const testsPlugin = require('./plugins/tests');
@@ -52,7 +53,8 @@ module.exports = {
       testsPlugin,
       maintenancePlugin,
       supportPlugin,
-      typingsPlugin
+      typingsPlugin,
+      citgmPlugin
     ];
 
     for (const pkg of config.modules) {
