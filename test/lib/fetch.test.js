@@ -79,7 +79,7 @@ it('should use the cache on requests with the same target', async () => {
   const content2 = await network.fetch('https://example.test/test/test');
 
   expect(axios.get).toHaveBeenCalledTimes(1);
-  expect(axios.get).toHaveBeenCalledWith('https://example.test/test/test');
+  expect(axios.get).toHaveBeenCalledWith('https://example.test/test/test', {});
   expect(content2).toBe(content1);
 });
 
@@ -97,7 +97,7 @@ it('should use the cache on Github API requests with the same target', async () 
   expect(axios.get).toHaveBeenCalledTimes(1);
   expect(axios.get).toHaveBeenCalledWith(
     'https://api.github.com/repos/nodeshift/npcheck',
-    { headers: { 'Authorization': '' }}
+    { headers: { Authorization: '' } }
   );
   expect(content2).toBe(content1);
 });
@@ -110,13 +110,17 @@ it('should share cache between override and non-override Github API requests', a
     };
   });
 
-  const content1 = await network.fetchGithub('https://api.github.com/repos/nodeshift/npcheck', null, true);
+  const content1 = await network.fetchGithub(
+    'https://api.github.com/repos/nodeshift/npcheck',
+    null,
+    true
+  );
   const content2 = await network.fetchGithub('/repos/nodeshift/npcheck');
 
   expect(axios.get).toHaveBeenCalledTimes(1);
   expect(axios.get).toHaveBeenCalledWith(
     'https://api.github.com/repos/nodeshift/npcheck',
-    { headers: { 'Authorization': '' }}
+    { headers: { Authorization: '' } }
   );
   expect(content2).toBe(content1);
 });

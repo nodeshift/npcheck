@@ -3,11 +3,11 @@ const axios = require('axios');
 const cache = new Map();
 const clearCache = () => cache.clear();
 
-const fetch = async (url) => {
+const fetch = async (url, options = {}) => {
   // check if we already have the response in cache
   if (cache.has(url)) return cache.get(url).data;
 
-  const response = await axios.get(url);
+  const response = await axios.get(url, options);
 
   // save response in cache for future usage
   cache.set(url, response);
