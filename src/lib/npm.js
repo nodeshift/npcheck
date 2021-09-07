@@ -6,6 +6,6 @@ module.exports = {
     return JSON.parse(data);
   },
   buildInstallCommand: (name, path) => {
-    return 'npm install'.concat(` --prefix ${path}`).concat(` ${name}`);
+    return `npm install --prefix ${path} ${name}`;
   }
 };
