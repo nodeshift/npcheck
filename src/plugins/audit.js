@@ -1,6 +1,7 @@
+const Arborist = require('@npmcli/arborist');
+const Report = require('npm-audit-report');
 const { differenceInDays } = require('date-fns');
 
-const { getAuditInfo } = require('../lib/npm');
 const { fetch } = require('../lib/network');
 const { stringBuilder, success, failure, warning } = require('../lib/format');
 const { createError, createWarning } = require('../lib/result');
@@ -33,7 +34,11 @@ const formatOutputList = (vulnerabilities) => {
 };
 
 const auditPlugin = async () => {
-  const auditData = getAuditInfo();
+  const arborist = new Arborist({ path: './npcheck-env' });
+  const arboristReport = await arborist.audit();
+
+  const auditReport = Report(arboristReport, { reporter: 'json' });
+  const auditData = JSON.parse(auditReport.report);
 
   const audit = Object.keys(auditData.vulnerabilities)
     .map((key) => auditData.vulnerabilities[key])
