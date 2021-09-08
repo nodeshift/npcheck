@@ -86,6 +86,8 @@ const auditPlugin = async () => {
     '\nChecking for active vulnerabilities'
   ).withPadding(66);
 
+  const auditOutcome = [];
+
   // Error if there is a high or above vulnerability that has not been fixed after 1 month.
   const highRisk = auditResult.filter((v) => {
     const now = new Date();
@@ -99,10 +101,12 @@ const auditPlugin = async () => {
   if (highRisk.length > 0) {
     const format = highRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
     failure(output.get());
-    return createError(
-      `${highRisk.length} high risk ${format} found.\n\n${formatOutputList(
-        highRisk
-      )}`
+    auditOutcome.push(
+      createError(
+        `${highRisk.length} high risk ${format} found.\n\n${formatOutputList(
+          highRisk
+        )}`
+      )
     );
   }
 
@@ -119,10 +123,12 @@ const auditPlugin = async () => {
   if (mediumRisk.length > 0) {
     const format = highRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
     warning(output.get());
-    return createWarning(
-      `${highRisk.length} medium risk ${format} found.\n\n${formatOutputList(
-        mediumRisk
-      )}`
+    auditOutcome.push(
+      createWarning(
+        `${highRisk.length} medium risk ${format} found.\n\n${formatOutputList(
+          mediumRisk
+        )}`
+      )
     );
   }
 
@@ -132,16 +138,22 @@ const auditPlugin = async () => {
   if (lowRisk.length >= 10) {
     const format = highRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
     warning(output.get());
-    return createWarning(
-      `${highRisk.length} low risk ${format} found.\n\n${formatOutputList(
-        lowRisk
-      )}`
+    audit.push(
+      createWarning(
+        `${highRisk.length} low risk ${format} found.\n\n${formatOutputList(
+          lowRisk
+        )}`
+      )
     );
   }
 
-  // No active vulnerabilities detected.
-  success(output.get());
-  return null;
+  if (auditOutcome.length > 0) {
+    return auditOutcome;
+  } else {
+    // No active vulnerabilities detected.
+    success(output.get());
+    return null;
+  }
 };
 
 module.exports = auditPlugin;
