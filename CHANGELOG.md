@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.19](https://github.com/nodeshift/npcheck/compare/v0.1.18...v0.1.19) (2021-09-13)
+
+
+### Bug Fixes
+
+* package.json & package-lock.json to reduce vulnerabilities ([208cc8d](https://github.com/nodeshift/npcheck/commit/208cc8d15b7776736f1a7a8d7a257a9fe5ceefba))
+
 ### [0.1.18](https://github.com/nodeshift/npcheck/compare/v0.1.17...v0.1.18) (2021-09-01)
 
 
