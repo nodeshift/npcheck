@@ -15,9 +15,9 @@ const licenseTreePlugin = async (pkg, config) => {
   const depLicenses = await checkerAsync({ start: envFolderPath });
 
   // Remove module from the list
-  const dependencies = Object.entries(depLicenses).filter(
-    ([pkgName]) => !pkgName.includes(pkg.name)
-  );
+  const dependencies = Object.entries(depLicenses).filter(([pkgName, info]) => {
+    return !pkgName.includes(pkg.name) && info.path !== envFolderPath;
+  });
 
   const results = [];
 

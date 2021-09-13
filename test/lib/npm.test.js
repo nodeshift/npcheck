@@ -13,7 +13,7 @@ it('should build the npm install command.', () => {
   const path = '/Users/alex/workspace/_env';
 
   const response = buildInstallCommand(pkg, path);
-  const expected = `npm install --no-package-lock --prefix ${path} ${pkg}`;
+  const expected = `npm install --prefix ${path} ${pkg}`;
 
   expect(response).toBe(expected);
 });
