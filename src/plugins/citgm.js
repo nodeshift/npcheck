@@ -15,12 +15,12 @@ const getCITGMLookup = async (token) => {
   );
   const content = Buffer.from(metadata.content, metadata.encoding);
   return JSON.parse(content);
-}
+};
 
 const citgmPlugin = async (pkg, _, options) => {
   // Support plugin output
   const output = stringBuilder(
-      '\nChecking if module is tested by community CITGM runs'
+    '\nChecking if module is tested by community CITGM runs'
   ).withPadding(66);
 
   const lookup = await getCITGMLookup(options.token);
@@ -39,8 +39,8 @@ const citgmPlugin = async (pkg, _, options) => {
       );
     }
     const lts = (await nv('supported')).map(v => v.version);
-    for (version of lts) {
-      if ((!Array.isArray(skip) && semver.satisfies(version, skip)) || Array.isArray(skip) && skip.some(v => semver.satisfies(version, v))) {
+    for (const version of lts) {
+      if ((!Array.isArray(skip) && semver.satisfies(version, skip)) || (Array.isArray(skip) && skip.some(v => semver.satisfies(version, v)))) {
         warning(output.get());
         return createWarning(
             `The module "${pkg.name}" is not tested (skipped on ${version}) by community CITGM runs.`

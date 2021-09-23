@@ -21,7 +21,7 @@ const mockCITGMLookup = (content, encoding = 'utf8') => {
   network.fetchGithub.mockImplementation(() => {
     return Promise.resolve({ content, encoding });
   });
-}
+};
 
 beforeEach(() => {
   nv.mockImplementation(() => {
@@ -180,7 +180,7 @@ it('should not perform partial matches', async () => {
     name: 'mymodule'
   };
 
-  const result = await citgmPlugin(pkg, null, {});
+  await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
   expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
