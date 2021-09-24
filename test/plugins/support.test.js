@@ -258,6 +258,7 @@ it("should not return a N-API warning if the package doesn't have support for LT
 
   const result = await supportPlugin(pkg, {}, { githubToken: 'dummyToken' });
 
+  expect(result.reason).toContain('native');
   expect(result.reason).not.toContain('Node-API');
   expect(result.type).toBe('warning');
   expect(warning).toHaveBeenCalled();

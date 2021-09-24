@@ -54,27 +54,28 @@ const supportPlugin = async (pkg, config, options) => {
   const unsupportedVersions = unsupported.join(', ');
   warning(output.get());
 
-  const tlsUndetermined = supportData === 'unknown' && engines === '0.0.0';
-  const nonNapiNativeModule = await isNonNapiNativeModule(pkg, options);
+  const ltsUndetermined = supportData === 'unknown' && engines === '0.0.0';
+  const ltsMsg = 'does not specify the engines field or ' +
+    'package-support.json, so we cannot determine if it supports the LTS ' +
+    'versions of Node.js.';
 
-  if (tlsUndetermined && nonNapiNativeModule) {
-    return createWarning(`The native module "${pkg.name}" does not use ` +
-      'Node-API and does not specify the engines field or ' +
-      'package-support.json, so we cannot determine if it supports the LTS ' +
-      'versions of Node.js.');
+  if (ltsUndetermined && await isNativeModule(pkg, options)) {
+    let nativeWarnMsg = `The native module "${pkg.name}" `;
+    if (!isNapiModule(pkg)) {
+      nativeWarnMsg += 'does not use Node-API and ';
+    }
+    return createWarning(nativeWarnMsg + ltsMsg);
   }
 
-  if (tlsUndetermined) {
-    return createWarning(`The module "${pkg.name}" does not specify the ` +
-      'engines field or package-support.json, so we cannot determine if it ' +
-      'supports the LTS versions of Node.js.');
+  if (ltsUndetermined) {
+    return createWarning(`The module "${pkg.name}" ${ltsMsg}`);
   }
 
   return createWarning(`The module "${pkg.name}" has no support for the LTS ` +
     `version(s) ${unsupportedVersions} of Node.js.`);
 };
 
-async function isNonNapiNativeModule (pkg, options) {
+async function isNativeModule (pkg, options) {
   if (pkg?.repository?.url) {
     const githubTarget = pkg.repository.url
       .split('github.com/')[1]
@@ -97,7 +98,11 @@ async function isNonNapiNativeModule (pkg, options) {
     }
   }
 
-  return pkg?.dependencies?.nan;
+  return pkg?.dependencies?.nan || isNapiModule(pkg);
+}
+
+function isNapiModule (pkg) {
+  return pkg?.dependencies?.['node-addon-api'];
 }
 
 module.exports = supportPlugin;
