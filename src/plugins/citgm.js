@@ -17,11 +17,21 @@ const getCITGMLookup = async (token) => {
   return JSON.parse(content);
 };
 
-const citgmPlugin = async (pkg, _, options) => {
+const citgmPlugin = async (pkg, config, options) => {
   // Support plugin output
   const output = stringBuilder(
     '\nChecking if module is tested by community CITGM runs'
   ).withPadding(66);
+
+  // Skip this module if it was specified in the config.citgm.skip list.
+  if (config?.citgm?.skip) {
+    const list = config.citgm.skip;
+    for (const moduleName of list) {
+      if (pkg.name === moduleName) {
+        return null;
+      }
+    }
+  }
 
   const lookup = await getCITGMLookup(options.token);
   if (!lookup[pkg.name]) {
