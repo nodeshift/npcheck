@@ -185,3 +185,22 @@ it('should not perform partial matches', async () => {
   expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
 });
+
+it('should skip module if specified in citgm.skip list', async () => {
+  mockCITGMLookup('{ "rhea": {} }');
+
+  const pkg = {
+    name: 'rhea'
+  };
+
+  const config = {
+    citgm: {
+      skip: [pkg.name]
+    }
+  };
+
+  expect(await citgmPlugin(pkg, config, {})).toBeNull();
+  expect(network.fetchGithub).not.toHaveBeenCalled();
+  expect(network.fetchGithub).not.toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(format.success).not.toHaveBeenCalled();
+});
