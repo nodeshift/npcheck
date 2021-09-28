@@ -186,7 +186,7 @@ it('should not perform partial matches', async () => {
   expect(format.warning).toHaveBeenCalled();
 });
 
-it('should skip module is specified in citgm.skip list', async () => {
+it('should skip module if specified in citgm.skip list', async () => {
   mockCITGMLookup('{ "rhea": {} }');
 
   const pkg = {

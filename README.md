@@ -35,7 +35,7 @@ Npcheck requires a configuration file where custom behavior can be specified. Th
 
 - `licenses.rules[modules].override`: List of licenses that the cli will treat as warnings (future license decisions to be made) but won't break the CI. _(type: Array)_
 
-- `citgm'.skip[modules]`: Modules to be skipped by the CITGM checker _(type: Array)_
+- `citgm.skip[modules]`: Modules to be skipped by the CITGM checker _(type: Array)_
 
 ### Example
 
