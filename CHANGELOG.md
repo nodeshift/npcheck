@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.1.20](https://www.github.com/nodeshift/npcheck/compare/v0.1.19...v0.1.20) (2021-10-14)
+
+
+### Bug Fixes
+
+* upgrade axios from 0.21.3 to 0.21.4 ([#74](https://www.github.com/nodeshift/npcheck/issues/74)) ([a8448ee](https://www.github.com/nodeshift/npcheck/commit/a8448eefd127b88b0f47e84038a3d3037f7f98c1))
+* upgrade date-fns from 2.23.0 to 2.24.0 ([#81](https://www.github.com/nodeshift/npcheck/issues/81)) ([977cff0](https://www.github.com/nodeshift/npcheck/commit/977cff0b4cb7096d6e9942e8a7656fd3a421767e))
+* upgrade eslint-plugin-import from 2.24.0 to 2.24.2 ([#80](https://www.github.com/nodeshift/npcheck/issues/80)) ([7ffa70f](https://www.github.com/nodeshift/npcheck/commit/7ffa70f4136f8ad5a0b0a29a7173e7ac3a25718d))
+
 ### [0.1.19](https://github.com/nodeshift/npcheck/compare/v0.1.18...v0.1.19) (2021-09-13)
 
 
