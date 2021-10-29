@@ -30,7 +30,7 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@npmcli/arborist": "2.8.3",
+    "@npmcli/arborist": "2.9.0",
     "@pkgjs/nv": "^0.1.0",
     "@pkgjs/support": "^0.0.5",
     "axios": "^0.21.4",
