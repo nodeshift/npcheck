@@ -10,7 +10,7 @@ const ONE_MONTH = 30; // days
 const isSourceVulnerability = (item) => item.url !== undefined;
 
 const formatAuditEvents = (vulnerability) => {
-  const events = vulnerability.events.reduce((state, event) => {
+  const events = vulnerability.events?.reduce((state, event) => {
     state[event.type] = event.created;
     return state;
   }, {});
@@ -57,7 +57,7 @@ const auditPlugin = async () => {
         headers: { 'X-Spiferack': 1 }
       });
 
-      const advisory = { cve: data.advisoryData.cves[0], events: data.events };
+      const advisory = { cve: data.advisoryData?.cves[0], events: data.events };
 
       return {
         ...vulnerability,
@@ -85,7 +85,7 @@ const auditPlugin = async () => {
   // Error if there is a high or above vulnerability that has not been fixed after 1 month.
   const highRisk = auditResult.filter((v) => {
     const now = new Date();
-    const publishDate = new Date(v.events.published || v.events.reported);
+    const publishDate = new Date(v.events?.published || v.events?.reported);
     return (
       (v.severity === 'high' || v.severity === 'critical') &&
       differenceInDays(now, publishDate) > ONE_MONTH
@@ -107,7 +107,7 @@ const auditPlugin = async () => {
   // Warn if there is a medium vulnerability that has not been fixed after 4 months. (report the number of these)
   const mediumRisk = auditResult.filter((v) => {
     const now = new Date();
-    const publishDate = new Date(v.events.published || v.events.reported);
+    const publishDate = new Date(v.events?.published || v.events?.reported);
     return (
       v.severity === 'moderate' &&
       differenceInDays(now, publishDate) > ONE_MONTH * 4
