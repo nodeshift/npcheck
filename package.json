@@ -33,7 +33,7 @@
     "@npmcli/arborist": "2.9.0",
     "@pkgjs/nv": "^0.1.0",
     "@pkgjs/support": "^0.0.5",
-    "axios": "^0.21.4",
+    "axios": "^0.22.0",
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
     "date-fns": "^2.25.0",
