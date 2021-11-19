@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://www.github.com/nodeshift/npcheck/compare/v0.1.19...v0.2.0) (2021-11-19)
+
+
+### Features
+
+* upgrade @npmcli/arborist from 0.0.0 to 2.8.3 ([#79](https://www.github.com/nodeshift/npcheck/issues/79)) ([1d34b0a](https://www.github.com/nodeshift/npcheck/commit/1d34b0a80b56a8d7cc6cb6b0426bb53b7a2661a3))
+* upgrade @npmcli/arborist from 2.9.0 to 3.0.0 ([#85](https://www.github.com/nodeshift/npcheck/issues/85)) ([5ba9066](https://www.github.com/nodeshift/npcheck/commit/5ba90662f7820a83dca01f51ee85d5b891169a7f))
+
+
+### Bug Fixes
+
+* update security advisory data endpoint ([fc82dd3](https://www.github.com/nodeshift/npcheck/commit/fc82dd3410db6d27876a28a36186872e666ed143))
+* upgrade @npmcli/arborist from 2.8.3 to 2.9.0 ([#83](https://www.github.com/nodeshift/npcheck/issues/83)) ([147f899](https://www.github.com/nodeshift/npcheck/commit/147f899b18e77e03283abe5bbbfab9826d4a8e85))
+* upgrade axios from 0.21.3 to 0.21.4 ([#74](https://www.github.com/nodeshift/npcheck/issues/74)) ([a8448ee](https://www.github.com/nodeshift/npcheck/commit/a8448eefd127b88b0f47e84038a3d3037f7f98c1))
+* upgrade axios from 0.21.4 to 0.22.0 ([#86](https://www.github.com/nodeshift/npcheck/issues/86)) ([c0ef7cc](https://www.github.com/nodeshift/npcheck/commit/c0ef7cc3eaceea245690f71186e6cf6870bbab96))
+* upgrade date-fns from 2.23.0 to 2.24.0 ([#81](https://www.github.com/nodeshift/npcheck/issues/81)) ([977cff0](https://www.github.com/nodeshift/npcheck/commit/977cff0b4cb7096d6e9942e8a7656fd3a421767e))
+* upgrade date-fns from 2.24.0 to 2.25.0 ([#87](https://www.github.com/nodeshift/npcheck/issues/87)) ([ca5fcb8](https://www.github.com/nodeshift/npcheck/commit/ca5fcb8436dae2da5a4a9ffe38b016df1450ab0a))
+* upgrade eslint-plugin-import from 2.24.0 to 2.24.2 ([#80](https://www.github.com/nodeshift/npcheck/issues/80)) ([7ffa70f](https://www.github.com/nodeshift/npcheck/commit/7ffa70f4136f8ad5a0b0a29a7173e7ac3a25718d))
+* upgrade eslint-plugin-import from 2.24.2 to 2.25.2 ([#89](https://www.github.com/nodeshift/npcheck/issues/89)) ([ef64837](https://www.github.com/nodeshift/npcheck/commit/ef648370c5b6396e6d4b6af3087f0c4eca0ba8ce))
+* upgrade standard-version from 9.3.1 to 9.3.2 ([#90](https://www.github.com/nodeshift/npcheck/issues/90)) ([7358406](https://www.github.com/nodeshift/npcheck/commit/7358406bbe5d8cedab043d8115e71d1c3d9b4b33))
+
 ### [0.1.19](https://github.com/nodeshift/npcheck/compare/v0.1.18...v0.1.19) (2021-09-13)
 
 
