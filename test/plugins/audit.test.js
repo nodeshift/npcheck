@@ -54,29 +54,19 @@ it('should return an error if a critical vulnerability is active for more than 1
   // mocking http request
   network.fetch.mockImplementation(() => {
     return Promise.resolve({
-      advisoryData: {
-        id: 1756,
-        cves: ['CVE-2021-25945']
-      },
-      events: [
-        {
-          id: 3241,
-          advisory_id: 1756,
-          created: '2021-06-08T23:17:06.692',
-          type: 'published'
-        }
-      ]
+      id: 1756,
+      cves: ['CVE-2021-25945'],
+      created: '2021-06-08T23:17:06.692',
+      updated: '2021-06-08T23:17:06.692'
     });
   });
 
   const result = await auditPlugin();
-
   expect(result.length).toBe(1);
   expect(result[0].type).toBe('error');
   expect(network.fetch).toHaveBeenCalled();
   expect(network.fetch).toHaveBeenCalledWith(
-    'https://npmjs.com/advisories/1756',
-    { headers: { 'X-Spiferack': 1 } }
+    'https://registry.npmjs.org/-/npm/v1/security/advisories/1756'
   );
   expect(failure).toHaveBeenCalled();
 });
@@ -103,18 +93,10 @@ it('should return a warning if a moderate vulnerability is active for more than 
   // mocking http request
   network.fetch.mockImplementation(() => {
     return Promise.resolve({
-      advisoryData: {
-        id: 1756,
-        cves: ['CVE-2021-25945']
-      },
-      events: [
-        {
-          id: 3241,
-          advisory_id: 1756,
-          created: '2021-02-08T23:17:06.692',
-          type: 'published'
-        }
-      ]
+      id: 1756,
+      cves: ['CVE-2021-25945'],
+      created: '2021-06-08T23:16:33.057',
+      updated: '2021-02-08T23:17:06.691'
     });
   });
 
@@ -124,8 +106,7 @@ it('should return a warning if a moderate vulnerability is active for more than 
   expect(result[0].type).toBe('warning');
   expect(network.fetch).toHaveBeenCalled();
   expect(network.fetch).toHaveBeenCalledWith(
-    'https://npmjs.com/advisories/1756',
-    { headers: { 'X-Spiferack': 1 } }
+    'https://registry.npmjs.org/-/npm/v1/security/advisories/1756'
   );
   expect(warning).toHaveBeenCalled();
 });
@@ -161,18 +142,10 @@ it("should return a warning if they're more than 10 low risk vulnerabilities", a
   */
   network.fetch.mockImplementation(() => {
     return Promise.resolve({
-      advisoryData: {
-        id: 1756,
-        cves: ['CVE-2021-25945']
-      },
-      events: [
-        {
-          id: 3241,
-          advisory_id: 1756,
-          created: '2021-02-08T23:17:06.692',
-          type: 'published'
-        }
-      ]
+      id: 1756,
+      cves: ['CVE-2021-25945'],
+      created: '2021-06-08T23:16:33.057',
+      updated: '2021-02-08T23:17:06.691'
     });
   });
 
