@@ -115,9 +115,9 @@ module.exports = {
 
     results.forEach((log, index) => {
       if (log.type === 'error') {
-        console.log(chalk.red(`\n(${index + 1}): ${log.reason}`));
+        console.log(chalk.red(`(${index + 1}): ${log.reason}`, '- ERROR'));
       } else {
-        console.log(chalk.yellow(`\n(${index + 1}): ${log.reason}`));
+        console.log(chalk.yellow(`(${index + 1}): ${log.reason}`));
       }
     });
 
