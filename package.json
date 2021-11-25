@@ -20,6 +20,9 @@
   "bin": {
     "npcheck": "index.js"
   },
+  "engines": {
+    "node": "^16 || ^14"
+  },
   "scripts": {
     "start": "node .",
     "prepare": "husky install",
