@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.3.1](https://www.github.com/nodeshift/npcheck/compare/v0.3.0...v0.3.1) (2021-11-26)
+
+
+### Bug Fixes
+
+* upgrade axios from 0.22.0 to 0.24.0 ([4f57f5e](https://www.github.com/nodeshift/npcheck/commit/4f57f5ea9ff20e94819b8f2999df61c88697446d))
+
 ## [0.3.0](https://www.github.com/nodeshift/npcheck/compare/v0.2.0...v0.3.0) (2021-11-24)
 
 
