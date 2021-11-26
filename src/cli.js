@@ -15,6 +15,7 @@ const maintenancePlugin = require('./plugins/maintenance');
 const supportPlugin = require('./plugins/support');
 const typingsPlugin = require('./plugins/typings');
 const auditPlugin = require('./plugins/audit');
+const resolvedPlugin = require('./plugins/resolved');
 
 const { getInfoFromNPM } = require('./lib/npm');
 const { merge, createError } = require('./lib/result');
@@ -56,7 +57,8 @@ module.exports = {
       supportPlugin,
       typingsPlugin,
       citgmPlugin,
-      auditPlugin
+      auditPlugin,
+      resolvedPlugin
     ];
 
     for (const pkg of config.modules) {
