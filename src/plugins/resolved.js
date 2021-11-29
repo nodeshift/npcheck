@@ -12,7 +12,7 @@ const resolvedPlugin = async (pkg, config, options, path = './npcheck-env') => {
     if (isGitURL(resolved)) {
       results.push(
         createError(
-          `The module "${pkg.name}" depends on the "${c.name}" which is using git instead of npm registry.`
+          `The module "${pkg.name}" depends on "${c.name}" using a git URL instead of fetching from an npm registry.`
         )
       );
     }
