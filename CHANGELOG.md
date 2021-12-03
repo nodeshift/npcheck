@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.1](https://www.github.com/nodeshift/npcheck/compare/v0.4.0...v0.4.1) (2021-12-03)
+
+
+### Bug Fixes
+
+* update jest ([4e799ec](https://www.github.com/nodeshift/npcheck/commit/4e799ec1c096709b277e2e35331141fcefff027e))
+
 ## [0.4.0](https://www.github.com/nodeshift/npcheck/compare/v0.3.0...v0.4.0) (2021-12-03)
 
 
