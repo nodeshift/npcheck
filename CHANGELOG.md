@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.4.0](https://www.github.com/nodeshift/npcheck/compare/v0.3.0...v0.4.0) (2021-12-03)
+
+
+### Features
+
+* add a check for a default number of dependencies ([05f353c](https://www.github.com/nodeshift/npcheck/commit/05f353c289a73742d9ef88ab71eff3a390e91a35))
+* checks if pkg is using git instead of npm ([18e425d](https://www.github.com/nodeshift/npcheck/commit/18e425df4944c2202bd19fd7181ecad22b9bd08f))
+
+
+### Bug Fixes
+
+* upgrade axios from 0.22.0 to 0.24.0 ([4f57f5e](https://www.github.com/nodeshift/npcheck/commit/4f57f5ea9ff20e94819b8f2999df61c88697446d))
+* upgrade eslint-plugin-import from 2.25.2 to 2.25.3 ([0372e27](https://www.github.com/nodeshift/npcheck/commit/0372e277b50859ad360f7745a228b54511e38372))
+
 ## [0.3.0](https://www.github.com/nodeshift/npcheck/compare/v0.2.0...v0.3.0) (2021-11-24)
 
 
