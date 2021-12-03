@@ -12,7 +12,7 @@ const resolvedPlugin = async (pkg, config, options, path = './npcheck-env') => {
   if (children.size - 1 > NUM_OF_DEPS) { // minus 1, the module itself
     results.push(
       createWarning(
-        `The module "${pkg.name}" has more dependencies (including sub-dependencies) than the default "${NUM_OF_DEPS}".`
+        `The module "${pkg.name}" has "${children.size - 1}" dependencies (including sub-dependencies) which is more than the default "${NUM_OF_DEPS}".`
       )
     );
   }
