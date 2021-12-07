@@ -87,7 +87,7 @@ const auditPlugin = async () => {
     failure(output.get());
     auditOutcome.push(
       createError(
-        `${highRisk.length} high risk ${format} found.\n\n${formatOutputList(
+        `${highRisk.length} high risk ${format} found that are older than 1 month.\n\n${formatOutputList(
           highRisk
         )}`
       )
@@ -107,11 +107,11 @@ const auditPlugin = async () => {
   });
 
   if (mediumRisk.length > 0) {
-    const format = highRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
+    const format = mediumRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
     warning(output.get());
     auditOutcome.push(
       createWarning(
-        `${highRisk.length} medium risk ${format} found.\n\n${formatOutputList(
+        `${mediumRisk.length} medium risk ${format} found that are older than 4 months.\n\n${formatOutputList(
           mediumRisk
         )}`
       )
@@ -122,11 +122,11 @@ const auditPlugin = async () => {
   const lowRisk = auditResult.filter((v) => v.severity === 'low');
 
   if (lowRisk.length >= 10) {
-    const format = highRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
+    const format = lowRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
     warning(output.get());
     auditOutcome.push(
       createWarning(
-        `${highRisk.length} low risk ${format} found.\n\n${formatOutputList(
+        `${lowRisk.length} low risk ${format} found.\n\n${formatOutputList(
           lowRisk
         )}`
       )
