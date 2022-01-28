@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.2](https://www.github.com/nodeshift/npcheck/compare/v0.4.1...v0.4.2) (2022-01-28)
+
+
+### Bug Fixes
+
+* fix cut an paste errors in audit plugin ([ce9336a](https://www.github.com/nodeshift/npcheck/commit/ce9336a2f9d92df12ff27362cc92cd95d1b8a96a))
+* package.json & package-lock.json to reduce vulnerabilities ([#117](https://www.github.com/nodeshift/npcheck/issues/117)) ([e4ad98b](https://www.github.com/nodeshift/npcheck/commit/e4ad98b61004421fccbcc480a501dd8bae1a1a83))
+* upgrade @pkgjs/nv from 0.1.0 to 0.2.0 ([#114](https://www.github.com/nodeshift/npcheck/issues/114)) ([da0708f](https://www.github.com/nodeshift/npcheck/commit/da0708fbd29a4c9822994a9ba042ec6704c4172e))
+* upgrade date-fns from 2.25.0 to 2.26.0 ([#112](https://www.github.com/nodeshift/npcheck/issues/112)) ([52eae49](https://www.github.com/nodeshift/npcheck/commit/52eae49e2691ca33f7412d0a85d79a928a29d963))
+* upgrade date-fns from 2.26.0 to 2.27.0 ([#113](https://www.github.com/nodeshift/npcheck/issues/113)) ([4723c95](https://www.github.com/nodeshift/npcheck/commit/4723c95f29b713287ba31e4fd1dc174947347e29))
+* upgrade date-fns from 2.27.0 to 2.28.0 ([#118](https://www.github.com/nodeshift/npcheck/issues/118)) ([94fd43b](https://www.github.com/nodeshift/npcheck/commit/94fd43bce838aeef639bf8c011a915c69f99e33c))
+* upgrade eslint-plugin-import from 2.25.3 to 2.25.4 ([#119](https://www.github.com/nodeshift/npcheck/issues/119)) ([2b62311](https://www.github.com/nodeshift/npcheck/commit/2b62311fed798dd1a225fa6c9113b840e2b1eac1))
+* upgrade jest from 27.4.3 to 27.4.4 ([#115](https://www.github.com/nodeshift/npcheck/issues/115)) ([3c7e0ce](https://www.github.com/nodeshift/npcheck/commit/3c7e0ce8108d6fcf3f15ee06ccc4dd0010b774f3))
+* upgrade jest from 27.4.4 to 27.4.5 ([#116](https://www.github.com/nodeshift/npcheck/issues/116)) ([7181d64](https://www.github.com/nodeshift/npcheck/commit/7181d64017d98a8ae29d1a9b0289eec3c7b8d73f))
+* upgrade jest from 27.4.5 to 27.4.6 ([#120](https://www.github.com/nodeshift/npcheck/issues/120)) ([a79ccbd](https://www.github.com/nodeshift/npcheck/commit/a79ccbdba339598cd72fa16c1535a642adf17519))
+* upgrade jest from 27.4.6 to 27.4.7 ([#121](https://www.github.com/nodeshift/npcheck/issues/121)) ([66e53ee](https://www.github.com/nodeshift/npcheck/commit/66e53ee0d4183a811d309396a0e0fc41f93f8baf))
+
 ### [0.4.1](https://www.github.com/nodeshift/npcheck/compare/v0.4.0...v0.4.1) (2021-12-03)
 
 
