@@ -44,7 +44,7 @@
     "is-git-url": "^1.0.0",
     "license-checker": "^25.0.1",
     "npm-audit-report": "^2.1.5",
-    "ramda": "^0.27.2",
+    "ramda": "^0.28.0",
     "semver": "^7.3.5",
     "yargs": "^16.2.0"
   },
