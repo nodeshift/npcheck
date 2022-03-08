@@ -37,6 +37,14 @@ Npcheck requires a configuration file where custom behavior can be specified. Th
 
 - `citgm.skip[modules]`: Modules to be skipped by the CITGM checker _(type: Array)_
 
+- `allow`: Config object do define vulnerabilities that have been accessed as ok to ignore. _(type: Object)_
+
+- `allow[CVE]`: Module and effected modules that are allowed to be ignored for CVE. _(type: Array)_
+
+- 'allow[CVE][i].name`: Name of the module against which the CVE is reported. _(type: String)_
+
+- 'allow[CVE][i].effects: Modules that include the module againts which the CVE is reported. _(type: Array)_
+
 ### Example
 
 A simple npcheck configuration file.
@@ -55,6 +63,14 @@ A simple npcheck configuration file.
   },
   "citgm": {
     "skip": ["rhea"]
+  },
+  "audit": {
+    "allow": {
+      "CVE-2022-0235": [{
+        "name": "node-fetch",
+        "effects": ["opencollective"]
+      }]
+    }
   }
 }
 ```
