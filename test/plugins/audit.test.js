@@ -27,7 +27,7 @@ it('should return null if no vulnerabilities are found', async () => {
     });
   });
 
-  const result = await auditPlugin();
+  const result = await auditPlugin('', {});
   expect(result).toBe(null);
   expect(success).toHaveBeenCalled();
 });
@@ -61,7 +61,7 @@ it('should return an error if a critical vulnerability is active for more than 1
     });
   });
 
-  const result = await auditPlugin();
+  const result = await auditPlugin('', {});
   expect(result.length).toBe(1);
   expect(result[0].type).toBe('error');
   expect(network.fetch).toHaveBeenCalled();
@@ -69,6 +69,54 @@ it('should return an error if a critical vulnerability is active for more than 1
     'https://registry.npmjs.org/-/npm/v1/security/advisories/1756'
   );
   expect(failure).toHaveBeenCalled();
+});
+
+it('should not return an error if a critical vulnerability is active for more than 1 month but is allowed', async () => {
+  // mocking the NPM audit info
+  npm.getAuditInfo.mockImplementation(() => {
+    return Promise.resolve({
+      auditReportVersion: 2,
+      vulnerabilities: {
+        'bad-package': {
+          name: 'bad-package',
+          severity: 'critical',
+          via: [
+            {
+              source: 1756,
+              url: 'https://npmjs.com/advisories/1756'
+            }
+          ],
+          effects: ['bad-package2']
+        }
+      }
+    });
+  });
+  // mocking http request
+  network.fetch.mockImplementation(() => {
+    return Promise.resolve({
+      id: 1756,
+      cves: ['CVE-2021-25945'],
+      created: '2021-06-08T23:17:06.692',
+      updated: '2021-06-08T23:17:06.692'
+    });
+  });
+
+  const result = await auditPlugin('', {
+    audit: {
+      allow: {
+        'CVE-2021-25945': [{
+          name: 'bad-package',
+          effects: ['bad-package2']
+        }]
+      }
+    }
+  });
+  expect(result).toBe(null);
+  expect(network.fetch).toHaveBeenCalled();
+  expect(network.fetch).toHaveBeenCalledWith(
+    'https://registry.npmjs.org/-/npm/v1/security/advisories/1756'
+  );
+  expect(success).toHaveBeenCalled();
 });
 
 it('should return a warning if a moderate vulnerability is active for more than 4 months', async () => {
@@ -100,7 +148,7 @@ it('should return a warning if a moderate vulnerability is active for more than 
     });
   });
 
-  const result = await auditPlugin();
+  const result = await auditPlugin('', {});
 
   expect(result.length).toBe(1);
   expect(result[0].type).toBe('warning');
@@ -149,7 +197,7 @@ it("should return a warning if they're more than 10 low risk vulnerabilities", a
     });
   });
 
-  const result = await auditPlugin();
+  const result = await auditPlugin('', {});
 
   expect(result.length).toBe(1);
   expect(result[0].type).toBe('warning');

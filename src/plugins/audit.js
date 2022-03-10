@@ -9,6 +9,22 @@ const ONE_MONTH = 30; // days
 
 const isSourceVulnerability = (item) => item.source !== undefined;
 
+const isVulnAllowed = (vuln, config) => {
+  if (config.audit && config.audit.allow && config.audit.allow[vuln.cve]) {
+    for (const allowed of config.audit.allow[vuln.cve]) {
+      if ((allowed.name === vuln.name) &&
+          vuln.effects &&
+          vuln.effects.every(elem => {
+            return allowed.effects.includes(elem);
+          })
+      ) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+
 const formatAudit = (v) => ({
   name: v.name,
   created: v.created,
@@ -26,7 +42,7 @@ const formatOutputList = (vulnerabilities) => {
     .join('\n');
 };
 
-const auditPlugin = async () => {
+const auditPlugin = async (pkg, config) => {
   const auditData = await getAuditInfo();
   const audit = Object.keys(auditData.vulnerabilities)
     .map((key) => auditData.vulnerabilities[key])
@@ -78,7 +94,8 @@ const auditPlugin = async () => {
     const publishDate = min([new Date(v.created), new Date(v.updated)]);
     return (
       (v.severity === 'high' || v.severity === 'critical') &&
-      differenceInDays(now, publishDate) > ONE_MONTH
+      differenceInDays(now, publishDate) > ONE_MONTH &&
+      !isVulnAllowed(v, config)
     );
   });
 
@@ -102,7 +119,8 @@ const auditPlugin = async () => {
     const publishDate = min([new Date(v.created), new Date(v.updated)]);
     return (
       v.severity === 'moderate' &&
-      differenceInDays(now, publishDate) > ONE_MONTH * 4
+      differenceInDays(now, publishDate) > ONE_MONTH * 4 &&
+      !isVulnAllowed(v, config)
     );
   });
 
@@ -119,7 +137,12 @@ const auditPlugin = async () => {
   }
 
   // Warn if there is more than 10 Low vulnerabilities (report the number of these)
-  const lowRisk = auditResult.filter((v) => v.severity === 'low');
+  const lowRisk = auditResult.filter((v) => {
+    return (
+      v.severity === 'low' &&
+      !isVulnAllowed(v, config)
+    );
+  });
 
   if (lowRisk.length >= 10) {
     const format = lowRisk.length === 1 ? 'vulnerability' : 'vulnerabilities';
