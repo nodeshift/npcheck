@@ -27,7 +27,7 @@ it('should return null if no vulnerabilities are found', async () => {
     });
   });
 
-  const result = await auditPlugin('', {});
+  const result = await auditPlugin('', {}, { githubToken: 'bogus' });
   expect(result).toBe(null);
   expect(success).toHaveBeenCalled();
 });
@@ -51,23 +51,25 @@ it('should return an error if a critical vulnerability is active for more than 1
       }
     });
   });
-  // mocking http request
-  network.fetch.mockImplementation(() => {
+  network.post.mockImplementation(() => {
     return Promise.resolve({
-      id: 1756,
-      cves: ['CVE-2021-25945'],
-      created: '2021-06-08T23:17:06.692',
-      updated: '2021-06-08T23:17:06.692'
+      data: {
+        securityAdvisory: {
+          publishedAt: '2021-06-08T23:17:06.692',
+          updatedAt: '2021-06-08T23:17:06.692',
+          identifiers: [
+            { type: 'GHSA', value: 'GHSA-jj47-x69x-mxrm' },
+            { type: 'CVE', value: 'CVE-2021-25945' }
+          ]
+        }
+      }
     });
   });
 
-  const result = await auditPlugin('', {});
+  const result = await auditPlugin('', {}, { githubToken: 'bogus' });
   expect(result.length).toBe(1);
   expect(result[0].type).toBe('error');
-  expect(network.fetch).toHaveBeenCalled();
-  expect(network.fetch).toHaveBeenCalledWith(
-    'https://registry.npmjs.org/-/npm/v1/security/advisories/1756'
-  );
+  expect(network.post).toHaveBeenCalled();
   expect(failure).toHaveBeenCalled();
 });
 
@@ -92,12 +94,18 @@ it('should not return an error if a critical vulnerability is active for more th
     });
   });
   // mocking http request
-  network.fetch.mockImplementation(() => {
+  network.post.mockImplementation(() => {
     return Promise.resolve({
-      id: 1756,
-      cves: ['CVE-2021-25945'],
-      created: '2021-06-08T23:17:06.692',
-      updated: '2021-06-08T23:17:06.692'
+      data: {
+        securityAdvisory: {
+          publishedAt: '2021-06-08T23:17:06.692',
+          updatedAt: '2021-06-08T23:17:06.692',
+          identifiers: [
+            { type: 'GHSA', value: 'GHSA-jj47-x69x-mxrm' },
+            { type: 'CVE', value: 'CVE-2021-25945' }
+          ]
+        }
+      }
     });
   });
 
@@ -110,12 +118,9 @@ it('should not return an error if a critical vulnerability is active for more th
         }]
       }
     }
-  });
+  }, { githubToken: 'bogus' });
   expect(result).toBe(null);
-  expect(network.fetch).toHaveBeenCalled();
-  expect(network.fetch).toHaveBeenCalledWith(
-    'https://registry.npmjs.org/-/npm/v1/security/advisories/1756'
-  );
+  expect(network.post).toHaveBeenCalled();
   expect(success).toHaveBeenCalled();
 });
 
@@ -139,23 +144,26 @@ it('should return a warning if a moderate vulnerability is active for more than 
     });
   });
   // mocking http request
-  network.fetch.mockImplementation(() => {
+  network.post.mockImplementation(() => {
     return Promise.resolve({
-      id: 1756,
-      cves: ['CVE-2021-25945'],
-      created: '2021-06-08T23:16:33.057',
-      updated: '2021-02-08T23:17:06.691'
+      data: {
+        securityAdvisory: {
+          publishedAt: '2021-06-08T23:17:06.692',
+          updatedAt: '2021-06-08T23:17:06.692',
+          identifiers: [
+            { type: 'GHSA', value: 'GHSA-jj47-x69x-mxrm' },
+            { type: 'CVE', value: 'CVE-2021-25945' }
+          ]
+        }
+      }
     });
   });
 
-  const result = await auditPlugin('', {});
+  const result = await auditPlugin('', {}, { githubToken: 'bogus' });
 
   expect(result.length).toBe(1);
   expect(result[0].type).toBe('warning');
-  expect(network.fetch).toHaveBeenCalled();
-  expect(network.fetch).toHaveBeenCalledWith(
-    'https://registry.npmjs.org/-/npm/v1/security/advisories/1756'
-  );
+  expect(network.post).toHaveBeenCalled();
   expect(warning).toHaveBeenCalled();
 });
 
@@ -188,16 +196,22 @@ it("should return a warning if they're more than 10 low risk vulnerabilities", a
     Mocking http requests.
     The data will be the same for all vulnerabilities but it's not important for this case.
   */
-  network.fetch.mockImplementation(() => {
+  network.post.mockImplementation(() => {
     return Promise.resolve({
-      id: 1756,
-      cves: ['CVE-2021-25945'],
-      created: '2021-06-08T23:16:33.057',
-      updated: '2021-02-08T23:17:06.691'
+      data: {
+        securityAdvisory: {
+          publishedAt: '2021-06-08T23:17:06.692',
+          updatedAt: '2021-06-08T23:17:06.692',
+          identifiers: [
+            { type: 'GHSA', value: 'GHSA-jj47-x69x-mxrm' },
+            { type: 'CVE', value: 'CVE-2021-25945' }
+          ]
+        }
+      }
     });
   });
 
-  const result = await auditPlugin('', {});
+  const result = await auditPlugin('', {}, { githubToken: 'bogus' });
 
   expect(result.length).toBe(1);
   expect(result[0].type).toBe('warning');
