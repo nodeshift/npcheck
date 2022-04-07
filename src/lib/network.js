@@ -31,4 +31,15 @@ const fetchGithub = async (target, token, override = false) => {
   return response.data;
 };
 
-module.exports = { fetch, fetchGithub, cache, clearCache };
+const post = async (url, options = {}) => {
+  // check if we already have the response in cache
+  if (cache.has(url)) return cache.get(url).data;
+
+  const response = await axios.post(url, options.body, options);
+
+  // save response in cache for future usage
+  cache.set(url, response);
+  return response.data;
+};
+
+module.exports = { fetch, fetchGithub, cache, clearCache, post };

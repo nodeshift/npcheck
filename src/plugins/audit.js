@@ -1,6 +1,6 @@
 const { differenceInDays, min } = require('date-fns');
 
-const { fetch } = require('../lib/network');
+const { post } = require('../lib/network');
 const { getAuditInfo } = require('../lib/npm');
 const { stringBuilder, success, failure, warning } = require('../lib/format');
 const { createError, createWarning } = require('../lib/result');
@@ -42,7 +42,11 @@ const formatOutputList = (vulnerabilities) => {
     .join('\n');
 };
 
-const auditPlugin = async (pkg, config) => {
+const auditPlugin = async (pkg, config, options) => {
+  if (options.githubToken === undefined) {
+    return createWarning('The Audit plugin requires a GitHub Token to be ' +
+      'specified using --github-token, or a GITHUB_TOKEN environment variable');
+  }
   const auditData = await getAuditInfo();
   const audit = Object.keys(auditData.vulnerabilities)
     .map((key) => auditData.vulnerabilities[key])
@@ -62,9 +66,40 @@ const auditPlugin = async (pkg, config) => {
 
   const auditPromises = audit.map((vulnerability) =>
     (async () => {
-      // Getting extra advisory data from NPM
-      const data = await fetch(`https://registry.npmjs.org/-/npm/v1/security/advisories/${vulnerability.via.source}`);
-      const advisory = { cve: data.cves[0], created: data.created, updated: data.updated };
+      // Getting extra advisory data from GitHub adivisories
+      const ghsaId = vulnerability.via.url.split('/')[4];
+      const query = `query {
+        securityAdvisory(ghsaId: "${ghsaId}") {
+          ghsaId
+          publishedAt
+          updatedAt
+          identifiers {
+            type
+            value
+          }
+        }
+      }`;
+      const data = await post('https://api.github.com/graphql', {
+        body: JSON.stringify({ query }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `token ${options.githubToken}`
+        }
+      }).then(res => res.data)
+        .catch(error => console.error(error));
+
+      let cve = '';
+      for (const id of data.securityAdvisory.identifiers) {
+        if (id.type === 'CVE') {
+          cve = id.value;
+          break;
+        }
+      }
+      const advisory = {
+        cve: cve,
+        created: data.securityAdvisory.publishedAt,
+        updated: data.securityAdvisory.updatedAt
+      };
       return {
         ...vulnerability,
         ...advisory
