@@ -32,13 +32,8 @@ const fetchGithub = async (target, token, override = false) => {
 };
 
 const post = async (url, options = {}) => {
-  // check if we already have the response in cache
-  if (cache.has(url)) return cache.get(url).data;
-
+  // don't cache since the options need to be considered
   const response = await axios.post(url, options.body, options);
-
-  // save response in cache for future usage
-  cache.set(url, response);
   return response.data;
 };
 
