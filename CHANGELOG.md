@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.4.4](https://github.com/nodeshift/npcheck/compare/v0.4.3...v0.4.4) (2022-10-20)
+
+
+### Features
+
+* special case BSD* to allow match with BSD ([0e38345](https://github.com/nodeshift/npcheck/commit/0e38345260335973fc070249b76336a79a8b4718))
+
+
+### Bug Fixes
+
+* remove caching on network post ([41c3e01](https://github.com/nodeshift/npcheck/commit/41c3e018f720e210ee227ffc9a1e88fe16074d92))
+
 ### [0.4.3](https://github.com/nodeshift/npcheck/compare/v0.4.2...v0.4.3) (2022-04-07)
 
 ### [0.4.2](https://github.com/nodeshift/npcheck/compare/v0.4.1...v0.4.2) (2022-03-10)
