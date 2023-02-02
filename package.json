@@ -23,6 +23,7 @@
   "engines": {
     "node": ">=14"
   },
+  "type": "commonjs",
   "scripts": {
     "start": "node .",
     "prepare": "husky install",
