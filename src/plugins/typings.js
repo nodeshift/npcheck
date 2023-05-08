@@ -19,6 +19,8 @@ const typingsPlugin = async (pkg) => {
     return null;
   }
 
+  /* This api has been deprecated, we will need to see if there is another way to find
+     types that are not in the package itself. Fot now remove as it breaks the npcheck flow
   // Then we'll check Microsoft's @types/<package> list
   const TYPES_URI =
     'https://typespublisher.blob.core.windows.net/typespublisher/data/search-index-min.json';
@@ -30,7 +32,8 @@ const typingsPlugin = async (pkg) => {
     success(output.get());
     return null;
   }
-
+  */
+  
   // It seems that there're no available typescript typings
   warning(output.get());
   return createWarning(
