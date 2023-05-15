@@ -37,6 +37,8 @@ it('should return null if the package specifies typings info on package.json', a
 });
 
 /*
+ * Remove these tests until we find another API to find typings see
+ * https://github.com/nodeshift/npcheck/pull/138
 it('should return null if the package has typescript typings through definitely-typed', async () => {
   // clear network cache before test
   network.clearCache();
