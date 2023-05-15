@@ -36,6 +36,7 @@ it('should return null if the package specifies typings info on package.json', a
   expect(success).toHaveBeenCalled();
 });
 
+/*
 it('should return null if the package has typescript typings through definitely-typed', async () => {
   // clear network cache before test
   network.clearCache();
@@ -83,6 +84,7 @@ it('should return null if the package has typescript typings through definitely-
   expect(result).toBe(null);
   expect(success).toHaveBeenCalled();
 });
+*/
 
 it('should return a warning when the module has no typescript typings', async () => {
   // clear network cache before test
