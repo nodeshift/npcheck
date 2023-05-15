@@ -19,7 +19,7 @@ const typingsPlugin = async (pkg) => {
   }
 
   /* This api has been deprecated, we will need to see if there is another way to find
-     types that are not in the package itself. Fot now remove as it breaks the npcheck flow
+     types that are not in the package itself. For now remove as it breaks the npcheck flow
   // Then we'll check Microsoft's @types/<package> list
   const TYPES_URI =
     'https://typespublisher.blob.core.windows.net/typespublisher/data/search-index-min.json';
