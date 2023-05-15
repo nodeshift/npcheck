@@ -33,7 +33,6 @@ const typingsPlugin = async (pkg) => {
     return null;
   }
   */
-  
   // It seems that there're no available typescript typings
   warning(output.get());
   return createWarning(
