@@ -1,4 +1,3 @@
-const { fetch } = require('../lib/network');
 const { stringBuilder, warning, success } = require('../lib/format');
 const { createWarning } = require('../lib/result');
 
