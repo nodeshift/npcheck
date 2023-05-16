@@ -57,7 +57,7 @@
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.2.1",
-    "husky": "^6.0.0",
+    "husky": "^8.0.3",
     "jest": "^27.4.7",
     "standard-version": "^9.3.2"
   }
