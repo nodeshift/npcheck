@@ -59,6 +59,6 @@
     "eslint-plugin-promise": "^4.2.1",
     "husky": "^6.0.0",
     "jest": "^27.4.7",
-    "standard-version": "^9.3.2"
+    "standard-version": "^9.5.0"
   }
 }
