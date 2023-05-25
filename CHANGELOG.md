@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.5.0](https://www.github.com/nodeshift/npcheck/compare/v0.4.5...v0.5.0) (2023-05-25)
+
+
+### Features
+
+* upgrade @npmcli/arborist from 3.0.0 to 6.2.8 ([#140](https://www.github.com/nodeshift/npcheck/issues/140)) ([e062414](https://www.github.com/nodeshift/npcheck/commit/e06241441b32147a41a2f8656bb1b31463ad4d5d))
+* upgrade yargs from 16.2.0 to 17.3.1 ([#122](https://www.github.com/nodeshift/npcheck/issues/122)) ([cc06129](https://www.github.com/nodeshift/npcheck/commit/cc06129dd7b3e7adacfb3e70a5cd4c4b7e9b5bd1))
+
+
+### Bug Fixes
+
+* upgrade @npmcli/arborist from 6.2.8 to 6.2.9 ([#162](https://www.github.com/nodeshift/npcheck/issues/162)) ([9c7e280](https://www.github.com/nodeshift/npcheck/commit/9c7e2805e4198fb51b4b87a9048afa8b41448dd3))
+* upgrade date-fns from 2.28.0 to 2.29.3 ([#150](https://www.github.com/nodeshift/npcheck/issues/150)) ([35ff056](https://www.github.com/nodeshift/npcheck/commit/35ff05662edae0301028ac1f6abc13596bec69f4))
+* upgrade date-fns from 2.29.3 to 2.30.0 ([#161](https://www.github.com/nodeshift/npcheck/issues/161)) ([fcd083c](https://www.github.com/nodeshift/npcheck/commit/fcd083ccb16e3ab367c8e2c9019f4d1a23c44316))
+* upgrade yargs from 17.3.1 to 17.7.2 ([#160](https://www.github.com/nodeshift/npcheck/issues/160)) ([2457cbc](https://www.github.com/nodeshift/npcheck/commit/2457cbc498ca673d5bd24d6597c02ebb668698ce))
+
 ### [0.4.5](https://github.com/nodeshift/npcheck/compare/v0.4.4...v0.4.5) (2023-05-15)
 
 ### [0.4.4](https://github.com/nodeshift/npcheck/compare/v0.4.3...v0.4.4) (2022-10-20)
