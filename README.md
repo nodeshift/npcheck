@@ -7,7 +7,7 @@
 
 ## Prerequisites
 
-- Node.js - version 14.x or greater
+- Node.js - version 16.x or greater
 
 ## Install
 
