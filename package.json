@@ -34,7 +34,7 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@npmcli/arborist": "6.2.8",
+    "@npmcli/arborist": "6.2.9",
     "@pkgjs/nv": "^0.2.0",
     "@pkgjs/support": "^0.0.5",
     "axios": "^0.24.0",
