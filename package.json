@@ -21,7 +21,7 @@
     "npcheck": "index.js"
   },
   "engines": {
-    "node": ">=14"
+    "node": ">=16"
   },
   "type": "commonjs",
   "scripts": {
