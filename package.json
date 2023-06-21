@@ -50,7 +50,7 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@types/jest": "^26.0.23",
+    "@types/jest": "^29.5.2",
     "eslint": "^7.18.0",
     "eslint-config-semistandard": "^15.0.1",
     "eslint-config-standard": "^16.0.2",
