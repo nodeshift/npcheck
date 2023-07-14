@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.1](https://github.com/nodeshift/npcheck/compare/v1.0.0...v1.0.1) (2023-07-14)
+
+
+### Bug Fixes
+
+* upgrade @npmcli/arborist from 6.2.9 to 6.2.10 ([#171](https://github.com/nodeshift/npcheck/issues/171)) ([ea76431](https://github.com/nodeshift/npcheck/commit/ea76431c8778863d888942c8017aaa72bc775908))
+
 ## [1.0.0](https://github.com/nodeshift/npcheck/compare/v0.4.1...v1.0.0) (2023-05-31)
 
 
