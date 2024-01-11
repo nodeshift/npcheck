@@ -41,7 +41,7 @@
     "chalk": "^4.1.0",
     "clear": "^0.1.0",
     "date-fns": "^2.30.0",
-    "figlet": "^1.5.0",
+    "figlet": "^1.7.0",
     "is-git-url": "^1.0.0",
     "license-checker": "^25.0.1",
     "npm-audit-report": "^2.1.5",
