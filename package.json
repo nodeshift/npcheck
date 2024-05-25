@@ -34,7 +34,7 @@
     "release": "standard-version"
   },
   "dependencies": {
-    "@npmcli/arborist": "6.2.10",
+    "@npmcli/arborist": "7.0.0",
     "@pkgjs/nv": "^0.2.0",
     "@pkgjs/support": "^0.0.5",
     "axios": "^0.24.0",
@@ -51,7 +51,7 @@
   },
   "devDependencies": {
     "@types/jest": "^26.0.23",
-    "eslint": "^7.18.0",
+    "eslint": "^9.0.0",
     "eslint-config-semistandard": "^15.0.1",
     "eslint-config-standard": "^16.0.2",
     "eslint-plugin-import": "^2.25.4",
