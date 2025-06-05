@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/nodeshift/npcheck/compare/v1.0.1...v2.0.0) (2025-06-05)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove Node 18 support ([#218](https://github.com/nodeshift/npcheck/issues/218))
+
+### Features
+
+* add node 24 support ([#217](https://github.com/nodeshift/npcheck/issues/217)) ([090239e](https://github.com/nodeshift/npcheck/commit/090239e7386909f8a30f95978f1a544ad14607da))
+* remove Node 18 support ([#218](https://github.com/nodeshift/npcheck/issues/218)) ([d6315e7](https://github.com/nodeshift/npcheck/commit/d6315e729b09705f2d01ec4ae653e3c011ccbb62))
+* upgrade date-fns from 2.30.0 to 3.0.5 ([#189](https://github.com/nodeshift/npcheck/issues/189)) ([379031f](https://github.com/nodeshift/npcheck/commit/379031fcab14f3b9f4c56d7b70623c37239a054b))
+* upgrade jest from 27.4.7 to 29.7.0 ([#186](https://github.com/nodeshift/npcheck/issues/186)) ([c0ba023](https://github.com/nodeshift/npcheck/commit/c0ba023324fe13173a8a6b57a715d46eb3cfe713))
+
+
+### Bug Fixes
+
+* upgrade semver from 7.5.1 to 7.5.4 ([#193](https://github.com/nodeshift/npcheck/issues/193)) ([56f9c06](https://github.com/nodeshift/npcheck/commit/56f9c06671f0df8c6cb529577566eec361b88a51))
+
 ## [1.0.1](https://github.com/nodeshift/npcheck/compare/v1.0.0...v1.0.1) (2023-07-14)
 
 
