@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.1](https://github.com/nodeshift/npcheck/compare/v3.0.0...v3.0.1) (2026-06-23)
+
+
+### Bug Fixes
+
+* using version 24 for publishing to npm ([#234](https://github.com/nodeshift/npcheck/issues/234)) ([1d98334](https://github.com/nodeshift/npcheck/commit/1d98334cc043d1a91c95f210c6df7fa4e6fe6702))
+
 ## [3.0.0](https://github.com/nodeshift/npcheck/compare/v2.0.0...v3.0.0) (2026-06-23)
 
 
