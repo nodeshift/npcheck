@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.0.0](https://github.com/nodeshift/npcheck/compare/v2.0.0...v3.0.0) (2026-06-23)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove Node 20 support, add Node 26 to CI ([#233](https://github.com/nodeshift/npcheck/issues/233))
+* remove Node 20 support ([#231](https://github.com/nodeshift/npcheck/issues/231))
+
+### Features
+
+* remove Node 20 support ([#231](https://github.com/nodeshift/npcheck/issues/231)) ([ac82fba](https://github.com/nodeshift/npcheck/commit/ac82fba125aa32f9f1a6d9ad72318601242ce805))
+* remove Node 20 support, add Node 26 to CI ([#233](https://github.com/nodeshift/npcheck/issues/233)) ([a442767](https://github.com/nodeshift/npcheck/commit/a442767939648415d3ad2649a854d8175023e0a3))
+
 ## [2.0.0](https://github.com/nodeshift/npcheck/compare/v1.0.1...v2.0.0) (2025-06-05)
 
 
