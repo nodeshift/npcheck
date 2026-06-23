@@ -7,7 +7,7 @@
 
 ## Prerequisites
 
-- Node.js - version 22.x or greater
+- Node.js - version 22.x, 24.x, or 26.x
 
 ## Install
 
