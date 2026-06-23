@@ -1,20 +1,23 @@
-# This workflow will do a clean install of node dependencies, build the source code and run tests across different versions of node
-# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
-
 name: Node.js CI
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nodejs-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
+      fail-fast: false
       matrix:
         node-version: [20.x, 22.x, 24.x]
 
@@ -24,12 +27,26 @@ jobs:
       uses: actions/setup-node@v6
       with:
         node-version: ${{ matrix.node-version }}
+
     - run: npm ci
     - run: npm test
+    - run: npx @pkgjs/support@latest validate
     - run: npm run coverage
-    - name: upload coverage to Coveralls
-      uses: coverallsapp/github-action@master
+
+    - name: Upload Coveralls Parallel
+      uses: coverallsapp/github-action@v2
       with:
-        github-token: ${{ secrets.github_token }}
+        github-token: ${{ secrets.GITHUB_TOKEN }}
         flag-name: run-${{ matrix.node-version }}
-    - run: npx @pkgjs/support validate
+        parallel: true
+
+  finish:
+    name: Node.js CI
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: coverallsapp/github-action@v2
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        parallel-finished: true
