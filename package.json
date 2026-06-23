@@ -5,7 +5,10 @@
   "keywords": [],
   "author": "Red Hat, Inc.",
   "license": "ISC",
-  "repository": "https://github.com/nodeshift/npcheck.git",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nodeshift/npcheck.git"
+  },
   "contributors": [
     {
       "name": "Alex Alikiotis",
