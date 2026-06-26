@@ -24,7 +24,7 @@
     "npcheck": "index.js"
   },
   "engines": {
-    "node": ">=22"
+    "node": "^22 || ^24 || ^26"
   },
   "type": "commonjs",
   "scripts": {
