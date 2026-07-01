@@ -39,7 +39,7 @@ it('should clean the npcheck-env directory', () => {
   const envPath = path.resolve(process.cwd(), 'npcheck-env');
   cleanEnvDirectory();
 
-  expect(fs.existsSync).toBeCalled();
+  expect(fs.existsSync).toHaveBeenCalled();
   expect(fs.existsSync).toHaveBeenCalledWith(envPath);
   expect(fs.rmdirSync).toHaveBeenCalled();
   expect(fs.rmdirSync).toHaveBeenCalledWith(envPath, { recursive: true });
@@ -53,7 +53,7 @@ it('should not call fs.rmdirSync if npcheck-env does not exists', () => {
   const envPath = path.resolve(process.cwd(), 'npcheck-env');
   cleanEnvDirectory();
 
-  expect(fs.existsSync).toBeCalled();
+  expect(fs.existsSync).toHaveBeenCalled();
   expect(fs.existsSync).toHaveBeenCalledWith(envPath);
   expect(fs.rmdirSync).toHaveBeenCalledTimes(0);
 });

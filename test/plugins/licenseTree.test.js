@@ -49,7 +49,7 @@ it('should return an empty list when the dep-tree has acceptable licenses', asyn
   const result = await licenseTreePlugin(testEnv.pkg, testEnv.config);
 
   expect(result).toEqual([]);
-  expect(success).toBeCalledTimes(2);
+  expect(success).toHaveBeenCalledTimes(2);
 });
 
 it('should return a list of errors when deps have non-acceptable licenses', async () => {
@@ -126,7 +126,7 @@ it('should return an empty list when deps have "local" acceptable licenses', asy
   const result = await licenseTreePlugin(testEnv.pkg, testEnv.config);
 
   expect(result).toEqual([]);
-  expect(success).toBeCalledTimes(2);
+  expect(success).toHaveBeenCalledTimes(2);
 });
 
 it('should return a list of warnings when deps have "non-decidable" licenses', async () => {
