@@ -33,7 +33,7 @@ it('should return null if the package is not archived', async () => {
   const result = await archivePlugin(pkg, null, {});
 
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith('/repos/n/n', undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith('/repos/n/n', undefined);
   expect(result).toBe(null);
 });
 
@@ -74,7 +74,7 @@ it('should return error result if the package is archived', async () => {
   const result = await archivePlugin(pkg, null, {});
 
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith('/repos/n/n', undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith('/repos/n/n', undefined);
   expect(result.type).toBe('error');
 });
 

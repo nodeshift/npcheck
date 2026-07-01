@@ -42,7 +42,7 @@ it('should succeed if package is tested by community CITGM', async () => {
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.success).toHaveBeenCalled();
   expect(result).toBeNull();
 });
@@ -56,7 +56,7 @@ it('should warn if package is not tested by community CITGM', async () => {
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
   expect(result.type).toBe('warning');
 });
@@ -70,7 +70,7 @@ it('should warn if package is skipped everywhere', async () => {
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
   expect(result.type).toBe('warning');
 });
@@ -84,7 +84,7 @@ it('should warn if package is skipped everywhere (array version)', async () => {
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
   expect(result.type).toBe('warning');
 });
@@ -98,7 +98,7 @@ it('should warn if package is skipped for in support versions', async () => {
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
   expect(result.type).toBe('warning');
 });
@@ -112,7 +112,7 @@ it('should warn if package is skipped for in support versions (array version)', 
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
   expect(result.type).toBe('warning');
 });
@@ -126,7 +126,7 @@ it('should succeed if package if skips do not affect in support versions', async
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.success).toHaveBeenCalled();
   expect(result).toBeNull();
 });
@@ -140,7 +140,7 @@ it('should succeed if package if skips do not affect in support versions (array 
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.success).toHaveBeenCalled();
   expect(result).toBeNull();
 });
@@ -154,7 +154,7 @@ it('should succeed if package if skips are only platform specific', async () => 
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.success).toHaveBeenCalled();
   expect(result).toBeNull();
 });
@@ -168,7 +168,7 @@ it('should succeed if package if skips are only platform specific (array version
 
   const result = await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.success).toHaveBeenCalled();
   expect(result).toBeNull();
 });
@@ -182,7 +182,7 @@ it('should not perform partial matches', async () => {
 
   await citgmPlugin(pkg, null, {});
   expect(network.fetchGithub).toHaveBeenCalled();
-  expect(network.fetchGithub).toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.warning).toHaveBeenCalled();
 });
 
@@ -201,6 +201,6 @@ it('should skip module if specified in citgm.skip list', async () => {
 
   expect(await citgmPlugin(pkg, config, {})).toBeNull();
   expect(network.fetchGithub).not.toHaveBeenCalled();
-  expect(network.fetchGithub).not.toBeCalledWith(CITGM_LOOKUP_URL, undefined);
+  expect(network.fetchGithub).not.toHaveBeenCalledWith(CITGM_LOOKUP_URL, undefined);
   expect(format.success).not.toHaveBeenCalled();
 });
